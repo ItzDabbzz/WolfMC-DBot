@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import me.itzdabbzz.wolfmc.Constants;
 import me.vem.jdab.DiscordBot;
 import me.vem.jdab.struct.MessagePurge;
 import me.vem.jdab.utils.ExtFileManager;
@@ -187,16 +188,19 @@ public class Monitor extends Command implements EventListener, Configurable{
         || info.isIgnored(event.getChannel()))
 			return;
 		
-		EmbedBuilder embed = new EmbedBuilder().setColor(Color.ORANGE);
+		EmbedBuilder embed = new EmbedBuilder().setColor(Constants.embedLime);
 		
 		if(msgLookup.containsKey(event.getMessageIdLong())) {
 			MessageInfo msgInfo = msgLookup.get(event.getMessageIdLong());
 			User author = event.getJDA().getUserById(msgInfo.getAuthorId());
 			if (author.isBot())
 				return;
-			embed.setDescription("**Message sent by** " + author.getAsMention() + " **deleted in** " + event.getChannel().getAsMention() + '\n' + msgInfo.getContent());
+			//embed.setDescription("**Message sent by** " + author.getAsMention() + " **deleted in** " + event.getChannel().getAsMention() + '\n' + msgInfo.getContent());
+			embed.addField(":wrench: Message Sent By: ", author.getAsMention() + "", true);
+			embed.addField("Channel: ", event.getChannel().getAsMention(), true);
+			embed.addField("Message:" , msgInfo.getContent(), false);
 		}else {
-			embed.setDescription("**Message deleted in** " + event.getChannel().getAsMention());
+			embed.setDescription(":wrench: **Message deleted in** " + event.getChannel().getAsMention());
 		}
 
 		embed.setAuthor(event.getGuild().getName(), null, event.getGuild().getIconUrl());
@@ -205,7 +209,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 		
 		Respond.async(info.channel, embed);
 	}
-	
+
 	private void messageUpdated(GuildMessageUpdateEvent event) {
 		MonitorInfo info = getInfo(event.getGuild());
 		
@@ -215,20 +219,22 @@ public class Monitor extends Command implements EventListener, Configurable{
         || info.isIgnored(event.getChannel()))
 			return;
 		
-		EmbedBuilder embed = new EmbedBuilder().setColor(Color.BLUE).setDescription("**Message edited in** " + event.getChannel().getAsMention());
-		
+		EmbedBuilder embed = new EmbedBuilder().setColor(Constants.embedDPink).setDescription(":wrench: **Message Edited**");
+
+
 		if(msgLookup.containsKey(event.getMessageIdLong())) {
 			MessageInfo msgInfo = msgLookup.get(event.getMessageIdLong());
-			embed.addField("Before", msgInfo.getContent(), false);
+			embed.addField("Before", msgInfo.getContent(), true);
 			msgInfo.setContent(event.getMessage().getContentRaw());
 		}else {
 			msgLookup.put(event.getMessageIdLong(), new MessageInfo(event.getAuthor(), event.getMessage().getContentRaw()));
 		}
 		
-		embed.addField("After", event.getMessage().getContentRaw(), false);
-		
-		embed.setAuthor(event.getAuthor().getName() + '#' + event.getAuthor().getDiscriminator(), null, event.getAuthor().getAvatarUrl());
-		embed.setFooter("User ID: " + event.getAuthor().getId(), null);
+		embed.addField("After", event.getMessage().getContentRaw(), true);
+		embed.addField("Channel", event.getChannel().getAsMention(), true);
+		embed.addField("Mentioned Users", event.getMessage().getMentionedMembers().size() + "", true);
+		embed.setAuthor(event.getAuthor().getName() + '#' + event.getAuthor().getDiscriminator(), null);
+		embed.setFooter("User ID: " + event.getAuthor().getId(), event.getAuthor().getAvatarUrl());
 		embed.setTimestamp(Instant.now());
 		
 		Respond.async(info.channel, embed);
@@ -240,7 +246,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 			return;
 		
 		EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN);
-		embed.setAuthor("Member Joined", null, event.getUser().getAvatarUrl());
+		embed.setAuthor(":desktop: Member Joined", null, event.getUser().getAvatarUrl());
 		embed.setDescription('\\' + event.getMember().getAsMention() + " " + event.getUser().getName() + '#' + event.getUser().getDiscriminator());
 		embed.setFooter("User ID: " + event.getUser().getId(), null);
 		embed.setTimestamp(Instant.now());
@@ -254,7 +260,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 			return;
 		
 		EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED);
-		embed.setAuthor("Member Joined", null, event.getUser().getAvatarUrl());
+		embed.setAuthor(":question: Member Joined", null, event.getUser().getAvatarUrl());
 		embed.setDescription('\\' + event.getUser().getAsMention() + " " + event.getUser().getName() + '#' + event.getUser().getDiscriminator());
 		embed.setFooter("User ID: " + event.getUser().getId(), null);
 		embed.setTimestamp(Instant.now());

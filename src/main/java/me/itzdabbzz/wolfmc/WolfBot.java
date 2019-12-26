@@ -4,6 +4,7 @@ import me.itzdabbzz.wolfmc.commands.Ping;
 import me.itzdabbzz.wolfmc.commands.XP;
 import me.itzdabbzz.wolfmc.commands.moderation.Kick;
 import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
+import me.itzdabbzz.wolfmc.commands.ptero.serverStatus;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
 import me.vem.jdab.DiscordBot;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 public class WolfBot {
 
+
     public static void main(String[] args) {
         Logger.setupFileLogging();
         Version.initialize(0,0,1,1, "WolfMC");
@@ -29,7 +31,7 @@ public class WolfBot {
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "token.txt";
         //DiscordBot.initialize(fetchToken(tokenFile));
-        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XXCpwg.KjTz41c5r-tQ6JfCBdDyOenmYwY");
+        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgT0Bw.pyBSQ82qnhq1oyBswe0DzSOii1g");
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
@@ -45,6 +47,7 @@ public class WolfBot {
         ModLog.initialize();
         XP.initialize();
         Kick.initialize();
+        //serverStatus.initialize();
     }
 
     public static String fetchToken(String file) {
