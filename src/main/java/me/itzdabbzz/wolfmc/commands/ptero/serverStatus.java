@@ -19,7 +19,7 @@ public class serverStatus extends SecureCommand {
 	public static serverStatus getInstance() {
 		return instance;
 	}
-	private static PteroAdminAPI api = new PteroAdminAPI("http://panel.itzdabbzz.me/", "6Q4cE2Jq8m9AaZvYxMaQKE85NIuRD0fGSq18zAzgvnOdluTM");
+	private static PteroAdminAPI api = new PteroAdminAPI("http://panel.", "");
 	public static void initialize() {
 		if(instance == null)
 			instance = new serverStatus();
