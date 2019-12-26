@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.tickets;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import me.itzdabbzz.wolfmc.data.Ticket;
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.cmd.Configurable;
 import me.vem.jdab.utils.ExtFileManager;
@@ -85,7 +86,7 @@ public class newTicket extends Command implements Configurable {
 	@Override
 	public void save() {
 		try {
-			PrintWriter out = ExtFileManager.getConfigOutput("prefix.json");
+			PrintWriter out = ExtFileManager.getConfigOutput("tickets.json");
 			//out.print(ExtFileManager.getGsonPretty().toJson(prefixDatabase));
 			out.flush();
 			out.close();
@@ -100,13 +101,14 @@ public class newTicket extends Command implements Configurable {
 	public void load() {
 		//prefixDatabase = new HashMap<>();
 
-		File configFile = ExtFileManager.getConfigFile("prefix.json");
+		File configFile = ExtFileManager.getConfigFile("tickets.json");
 		if(configFile == null) return;
 
 		String content = ExtFileManager.readFileAsString(configFile);
 		if(content == null || content.length() == 0) return;
 
 		Gson gson = ExtFileManager.getGsonPretty();
+
 		//prefixDatabase = gson.fromJson(content, new TypeToken<HashMap<Long, String>>(){}.getType());
 	}
 

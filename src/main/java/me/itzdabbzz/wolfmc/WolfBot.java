@@ -6,6 +6,7 @@ import me.itzdabbzz.wolfmc.commands.moderation.Kick;
 import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
 import me.itzdabbzz.wolfmc.commands.ptero.serverStatus;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
+import me.itzdabbzz.wolfmc.commands.setChannel;
 import me.vem.jdab.DiscordBot;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.StreamTrack;
@@ -31,11 +32,12 @@ public class WolfBot {
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "token.txt";
         //DiscordBot.initialize(fetchToken(tokenFile));
-        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgT0Bw.pyBSQ82qnhq1oyBswe0DzSOii1g");
+        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgVFGg.P1bQ3KhTf61NlTXCZVlZwhxW15s");
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
         DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
+        DiscordBot.getInstance().addEventListener(new MessageListeners());
 
         DiscordBot.getInstance().addEventListener(new EXPSystem());
 
@@ -47,6 +49,7 @@ public class WolfBot {
         ModLog.initialize();
         XP.initialize();
         Kick.initialize();
+        setChannel.initialize();
         //serverStatus.initialize();
     }
 
