@@ -248,5 +248,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Config Files for JDA Foundation
+config/*
 
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,eclipse,netbeans,intellij
