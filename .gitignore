@@ -250,5 +250,6 @@ $RECYCLE.BIN/
 
 # Config Files for JDA Foundation
 config/*
+logs/*
 
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,eclipse,netbeans,intellij
