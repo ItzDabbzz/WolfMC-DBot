@@ -1,2 +1,4 @@
-# WolfMC-DBot
-DBot
+
+### Support or Contact
+
+@ItzDabbzz
