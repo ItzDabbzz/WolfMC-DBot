@@ -30,9 +30,8 @@ public class WolfBot {
 
         Logger.infof("Hello World! From %s", Version.getVersion());
 
-        String tokenFile = args.length > 0 ? fetchToken(args[0]) : "token.txt";
-        //DiscordBot.initialize(fetchToken(tokenFile));
-        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgVFGg.P1bQ3KhTf61NlTXCZVlZwhxW15s");
+        String tokenFile = args.length > 0 ? fetchToken(args[0]) : "config/token.txt";
+        DiscordBot.initialize(fetchToken(tokenFile));
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
