@@ -1,22 +1,27 @@
 package me.itzdabbzz.wolfmc;
 
-import me.itzdabbzz.wolfmc.commands.general.Ping;
-import me.itzdabbzz.wolfmc.commands.general.XP;
-import me.itzdabbzz.wolfmc.commands.moderation.*;
-import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
-import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
-import me.itzdabbzz.wolfmc.commands.tickets.tadd;
-import me.vem.jdab.DiscordBot;
-import me.itzdabbzz.wolfmc.commands.general.StreamTrack;
-import me.vem.jdab.utils.Console;
-import me.vem.jdab.utils.ExtFileManager;
-import me.vem.jdab.utils.Logger;
-import me.vem.jdab.utils.Version;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import me.itzdabbzz.wolfmc.commands.general.Ping;
+import me.itzdabbzz.wolfmc.commands.general.XP;
+import me.itzdabbzz.wolfmc.commands.moderation.AntiPurge;
+import me.itzdabbzz.wolfmc.commands.moderation.Kick;
+import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
+import me.itzdabbzz.wolfmc.commands.moderation.Monitor;
+import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
+import me.itzdabbzz.wolfmc.commands.moderation.Purge;
+import me.itzdabbzz.wolfmc.commands.moderation.TempMute;
+import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
+import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
+import me.itzdabbzz.wolfmc.commands.tickets.tadd;
+import me.vem.jdab.DiscordBot;
+import me.vem.jdab.utils.Console;
+import me.vem.jdab.utils.ExtFileManager;
+import me.vem.jdab.utils.Logger;
+import me.vem.jdab.utils.Version;
 
 public class WolfBot {
 
@@ -39,12 +44,8 @@ public class WolfBot {
         DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
         DiscordBot.getInstance().addEventListener(new MessageListeners());
         DiscordBot.getInstance().addEventListener(Monitor.getInstance());
-
-
-        EXPSystem expSystem = new EXPSystem();
-        expSystem.startTimer();
-
-        StreamTrack.initialize();
+        
+        EXPSystem.initialize();
         Ping.initialize();
         ModLog.initialize();
         XP.initialize();

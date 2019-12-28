@@ -1,18 +1,13 @@
 package me.itzdabbzz.wolfmc;
 
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EXPSystem extends ListenerAdapter {
+import net.dv8tion.jda.api.entities.Member;
 
-    HashMap<Member, Integer> playerXP = new HashMap<>();
-    HashMap<Member, Integer> playerTimer = new HashMap<>();
+public class EXPSystem  {
 
     private static EXPSystem instance;
     public static EXPSystem getInstance() {
@@ -20,13 +15,21 @@ public class EXPSystem extends ListenerAdapter {
         return instance;
     }
 
-
-
     public static void initialize() {
         if(instance == null)
             instance = new EXPSystem();
     }
+    
+    private HashMap<Member, Integer> playerXP = new HashMap<>();
+    private HashMap<Member, Integer> playerTimer = new HashMap<>();
 
+    private EXPSystem() {
+        playerXP = new HashMap<>();
+        playerTimer = new HashMap<>();
+        
+        startTimer();
+    }
+    
     public int getPlayerXP(Member member)
     {
         return playerXP.get(member);
@@ -57,7 +60,7 @@ public class EXPSystem extends ListenerAdapter {
     }
 
     public void startTimer(){
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -67,8 +70,7 @@ public class EXPSystem extends ListenerAdapter {
             }
         };
         timer.schedule(task, 1000, 1000);
-        System.out.println("timer started");
-
+        System.out.println("exp timer started");
     }
 
 }
