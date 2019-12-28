@@ -1,6 +1,7 @@
 package me.itzdabbzz.wolfmc.data;
 
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -33,7 +34,7 @@ public class Ticket {
     private final Category category;
     private final Guild guild;
     private TextChannel ticketChannel;
-    private static final String INFO = "\n\n*To close your ticket , react with " + Constants.CHECK + "*";
+    private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*";
 
     public String getTicketID() {
         return ticketID;
@@ -60,7 +61,13 @@ public class Ticket {
     }
 
     public void closeIfValid() {
-        ticketChannel.sendMessage("***Ticket has been marked as closed!***").queue();
+        Message closeMessage = new MessageBuilder()
+                .setEmbed(new EmbedBuilder()
+                        .setDescription("***Ticket has been marked as closed!***")
+                        .setColor(Constants.embedRed)
+                        .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
+                        .build()).build();
+        ticketChannel.sendMessage(closeMessage).queue();
         ticketChannel.delete().completeAfter(3, TimeUnit.SECONDS);
     }
 
@@ -69,7 +76,7 @@ public class Ticket {
     }
 
     private void createTicket() {
-        String name = "ticket-" + author.getEffectiveName() + " - " + (int) (Math.random() * 1000);
+        String name = "t-" + author.getEffectiveName() + " - " + (int) (Math.random() * 1000);
         guild.createTextChannel(name).setParent(category).queue(success -> {
             this.ticketChannel = (TextChannel) success;
             sendMessage();
@@ -83,8 +90,8 @@ public class Ticket {
         Message initMessage = new MessageBuilder()
                 .setEmbed(new EmbedBuilder()
                 .setDescription(message.getContentDisplay() + INFO)
-                .setColor(new Color(0x2CD900))
-                .setAuthor("Ticket", null, null)
+                .setColor(Constants.embedCyan)
+                .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
                 .build()).build();
         ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction(Constants.CHECK).queue());
     }

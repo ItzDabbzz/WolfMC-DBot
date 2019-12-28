@@ -7,6 +7,7 @@ import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
 import me.itzdabbzz.wolfmc.commands.ptero.serverStatus;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
 import me.itzdabbzz.wolfmc.commands.setChannel;
+import me.itzdabbzz.wolfmc.commands.tickets.tadd;
 import me.vem.jdab.DiscordBot;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.StreamTrack;
@@ -56,6 +57,7 @@ public class WolfBot {
         XP.initialize();
         Kick.initialize();
         setChannel.initialize();
+        tadd.initialize();
         //serverStatus.initialize();
     }
 

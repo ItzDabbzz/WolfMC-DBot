@@ -35,11 +35,17 @@ public class ModLog extends SecureCommand {
 		//Respond.async(event.getChannel(), "This bot has been online for " + Utilities.formatTime(System.currentTimeMillis() - startTime) + ".");
 
 		Message message = event.getMessage();
-		if(args.length == 0){
-			Respond.async(event.getChannel(), "Test");
+		if("setchannel".equals(args[0])){
+			Respond.async(event.getChannel(), "Channel");
 		}else
-		if(args.length == 1){
-			Respond.async(event.getChannel(), "No");
+		if("setcolor".equals(args[0])){
+			Respond.async(event.getChannel(), "Color");
+		}
+		if("setresponse".equals(args[0])){
+			Respond.async(event.getChannel(), "Set Response");
+		}
+		if("response".equals(args[0])){
+			Respond.async(event.getChannel(), "Response");
 		}
 
 
