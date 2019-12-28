@@ -141,6 +141,7 @@ public class ExtFileManager {
 	
 	/**
 	 * Saves an object into a json-formatted file.
+	 * @param <T>
 	 * @param jsonFileName
 	 * @param object
 	 * @return

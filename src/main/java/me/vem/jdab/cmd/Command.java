@@ -127,7 +127,7 @@ public abstract class Command {
 	
 	/**
 	 * Tells the bot to respond in the channel given in the event with the help for this command.
-	 * @param channel -
+	 * @param event
 	 * @return true, always. So you can return this statement in the run() method.
 	 */
 	public boolean sendHelp(TextChannel channel, boolean successful) {

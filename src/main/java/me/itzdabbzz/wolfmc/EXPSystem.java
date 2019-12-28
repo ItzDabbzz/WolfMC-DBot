@@ -16,19 +16,15 @@ public class EXPSystem extends ListenerAdapter {
 
     private static EXPSystem instance;
     public static EXPSystem getInstance() {
+        initialize();
         return instance;
     }
+
+
 
     public static void initialize() {
         if(instance == null)
             instance = new EXPSystem();
-    }
-
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event){
-        if(canMemberGetXP(event.getMember())){
-            randXP(event.getMember());
-            setPlayerTime(event.getMember(), 60);
-        }
     }
 
     public int getPlayerXP(Member member)
@@ -36,24 +32,24 @@ public class EXPSystem extends ListenerAdapter {
         return playerXP.get(member);
     }
 
-    private void setPlayerXP(Member member, int xp){
+    public void setPlayerXP(Member member, int xp){
         playerXP.put(member, xp);
     }
 
-    private int getPlayerTime(Member member){
+    public int getPlayerTime(Member member){
         return playerTimer.get(member);
     }
 
-    private void setPlayerTime(Member member, int time){
+    public void setPlayerTime(Member member, int time){
         playerTimer.put(member, time);
     }
 
-    private void randXP(Member member){
+    public void randXP(Member member){
         Random r = new Random();
         setPlayerXP(member, getPlayerXP(member) + r.nextInt(10));
     }
 
-    private boolean canMemberGetXP(Member member){
+    public boolean canMemberGetXP(Member member){
         if(playerTimer.containsKey(member))
             return true;
         else
@@ -70,8 +66,9 @@ public class EXPSystem extends ListenerAdapter {
                 }
             }
         };
-        timer.schedule(task, 0, 1000);
-        //System.out.println("timer started");
+        timer.schedule(task, 1000, 1000);
+        System.out.println("timer started");
+
     }
 
 }

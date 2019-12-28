@@ -2,15 +2,15 @@ package me.vem.jdab;
 
 import javax.security.auth.login.LoginException;
 
-import me.itzdabbzz.wolfmc.commands.moderation.Monitor;
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.cmd.Configurable;
 import me.vem.jdab.cmd.Help;
 import me.vem.jdab.cmd.Prefix;
 import me.vem.jdab.cmd.Uptime;
-import me.vem.jdab.struct.menu.MenuListener;
+import me.vem.jdab.listener.CommandListener;
+import me.vem.jdab.listener.MenuListener;
+import me.vem.jdab.listener.RequestListener;
 import me.vem.jdab.utils.Logger;
-import me.vem.jdab.utils.confirm.ConfirmationListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -21,13 +21,16 @@ import net.dv8tion.jda.api.JDABuilder;
 public class DiscordBot {
 
 	private static DiscordBot instance;
+	public static boolean hasInstance() { return instance != null; }
 	public static DiscordBot getInstance() { return instance; }
-	public static void initialize(String token) {
-		if(instance == null) {
-			if(token == null || token.isEmpty()) 
-				throw new RuntimeException("Bot Token was null or empty. DiscordBot failed to load.");
-			else new DiscordBot(token);
-		}
+	public static DiscordBot initialize(String token) {
+	    if(instance != null)
+	        throw new IllegalStateException("DiscordBot has already been initialized! Cannot reinitialize!");
+	    
+		if(token == null || token.isEmpty()) 
+			throw new RuntimeException("Bot Token was null or empty. DiscordBot failed to load.");
+		
+		return new DiscordBot(token);
 	}
 	
 	private JDA jda;
@@ -36,7 +39,7 @@ public class DiscordBot {
 		try {
 			//Look at this trash. Don't be like me.
 			(jda = new JDABuilder(token)
-					.addEventListeners(MessageListener.getInstance())
+					.addEventListeners(CommandListener.getInstance())
 					.build().awaitReady())
 					.setAutoReconnect(true);
 		}catch(LoginException | IllegalArgumentException | InterruptedException e) {
@@ -47,11 +50,13 @@ public class DiscordBot {
 		instance = this;
 
 		jda.addEventListener(MenuListener.getInstance());
-		jda.addEventListener(ConfirmationListener.getInstance());
+		jda.addEventListener(RequestListener.getInstance());
 		
 		Help.initialize();
 		Prefix.initialize();
 		Uptime.initialize();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> Logger.info("Final application shutdown event has occurred."), "JDA-Foundation Shutdown Hook"));
 	}
 	
 	public void addEventListener(Object listener) {
@@ -85,8 +90,7 @@ public class DiscordBot {
 		Command.unloadAll();
 		
 		MenuListener.unload();
-		ConfirmationListener.unload();
-		Prefix.saveAll();
+		RequestListener.unload();
 		
 		//Save all configurable event listeners
 		for(Object o : jda.getRegisteredListeners())

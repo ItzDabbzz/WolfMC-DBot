@@ -13,6 +13,9 @@ import me.vem.jdab.utils.Respond;
 import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.audit.ActionType;
+import net.dv8tion.jda.api.audit.AuditLogChange;
+import net.dv8tion.jda.api.audit.AuditLogEntry;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -180,6 +183,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 	
 	private void messageDeleted(GuildMessageDeleteEvent event) {
 		MonitorInfo info = getInfo(event.getGuild());
+
 		if(info.channel == null 
         || info.channel.equals(event.getChannel()) 
         || info.isIgnored(event.getChannel()))

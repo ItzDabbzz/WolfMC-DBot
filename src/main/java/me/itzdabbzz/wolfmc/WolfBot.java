@@ -27,7 +27,7 @@ public class WolfBot {
     public static void main(String[] args) {
         Logger.setupFileLogging();
         Version.initialize(0,0,1,1, "WolfMC");
-        Console.buildConsole();
+        Console.initialize();
 
         Logger.infof("Hello World! From %s", Version.getVersion());
 
@@ -38,7 +38,6 @@ public class WolfBot {
         Permissions.initialize();
         DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
         DiscordBot.getInstance().addEventListener(new MessageListeners());
-        DiscordBot.getInstance().addEventListener(new EXPSystem());
         DiscordBot.getInstance().addEventListener(Monitor.getInstance());
 
 
@@ -52,6 +51,8 @@ public class WolfBot {
         Kick.initialize();
         setChannel.initialize();
         tadd.initialize();
+        Purge.initialize();
+        AntiPurge.initialize();
 
         TempMute.initialize();
         //serverStatus.initialize();

@@ -29,79 +29,65 @@ import me.vem.jdab.DiscordBot;
 
 public class Console {
 
-	private static JFrame console;
-	private static JTextArea consoleOutput;
-	private static PrintStream out;
+    private static Console instance;
+    public static boolean hasInstance() { return instance != null; }
+    public static Console getInstance() {
+        if(!hasInstance())
+            initialize();
+        
+        return instance;
+    }
+    
+    public static void initialize() {
+        if(hasInstance())
+            throw new IllegalStateException("Attempted to initialize Console even though it has already been initialized.");
+        
+        instance = new Console();
+    }
+    
+    //JFrame Elements
+    private JFrame console;
+	private JTextArea consoleOutput;
+	
+	//JMenu Elements
+	private JMenuBar menuBar;
 
-	private static TrayIcon tray;
+    private TrayIcon tray;
+    
+	private PrintStream out;
 
-	/** @return true if there is an open console. */
-	public static boolean hasConsole() { return console != null; }
-
-	/**
-	 * Creates the console only if it does not already exist.
-	 * 
-	 * @return true if build was successful; <br>
-	 *         false if there is already an open console that exists.
-	 */
-	public static boolean buildConsole() {
-		if (hasConsole())
-			return false;
-
-		buildTextArea();
-		activateTrayIcon();
-
-		console = new JFrame(Version.getVersion() + " Console");
-		console.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		console.setContentPane(new JScrollPane(consoleOutput));
-		console.setJMenuBar(getNewMenuBar());
-		console.setSize(new Dimension(600, 400));
-		console.setLocationRelativeTo(null);
-		console.setVisible(true);
-		
-		console.addWindowListener(new WindowAdapter() {
-			@Override public void windowClosing(WindowEvent windowEvent) {
-				disposeConsole();
-			}
-		});
-		
-		return true;
-	}
-
-	private static JMenuBar getNewMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		
-		JMenu menu = new JMenu("Options");
-		menuBar.add(menu);
-		
-		JMenuItem shutdown = new JMenuItem("Shutdown Bot");
-		shutdown.addActionListener(e -> shutdown());
-		menu.add(shutdown);
-		
-		return menuBar;
+	private Console() {
+        buildTextArea();
+        buildTrayIcon();
+        buildConsole();
 	}
 	
-	/**
-	 * Closes the current console window.
-	 */
-	public static void disposeConsole() {
-		if (!hasConsole())
-			return;
-
-		if (!SystemTray.isSupported() || tray == null) {
-			shutdown();
-		}else {
-			console.dispose();
-			console = null;
-		}
+	private void buildConsole() {
+	    if(console != null)
+	        return;
+	    
+        console = new JFrame(Version.getVersion() + " Console");
+        console.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        console.setContentPane(new JScrollPane(consoleOutput));
+        console.setJMenuBar(getMenuBar());
+        console.setSize(new Dimension(600, 400));
+        console.setLocationRelativeTo(null);
+        console.setVisible(true);
+        
+        console.addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent windowEvent) {
+                dispose();
+            }
+        });
 	}
 	
 	/**
 	 * Loads the text area object and redirection System.out and System.err to print to the text area.
 	 */
-	private static void buildTextArea() {
-		if(consoleOutput != null) return;
+	private void buildTextArea() {
+		if(consoleOutput != null)
+		    return;
+		
 		consoleOutput = new JTextArea();
 		consoleOutput.setEditable(false);
 		
@@ -112,16 +98,17 @@ public class Console {
 				if(c == '\n') consoleOutput.update(consoleOutput.getGraphics());
 			}
 		});
-		PrintThread.addSTDOut(out);
-		PrintThread.addSTDErr(out);
+		
+		PrintThread.getInstance().addOut(out);
+		PrintThread.getInstance().addErr(out);
 	}
 	
 	/**
 	 * Activates the Windows Tray icon that this application will run out of. <br>
 	 * Will not do anything for non-Windows systems (To my knowledge).
 	 */
-	private static void activateTrayIcon() {
-		if(!SystemTray.isSupported() || tray != null)
+	private void buildTrayIcon() {
+		if(tray != null || !SystemTray.isSupported())
 			return;
 		
 		try {
@@ -145,40 +132,96 @@ public class Console {
 			e.printStackTrace();
 		}
 	}
+
+    public JMenuBar getMenuBar() {
+        if(menuBar != null)
+            return menuBar;
+        
+        menuBar = new JMenuBar();
+        menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        
+        JMenu menu = new JMenu("Options");
+        menuBar.add(menu);
+        
+        JMenuItem shutdown = new JMenuItem("Shutdown Bot");
+        shutdown.addActionListener(e -> shutdownBot());
+        menu.add(shutdown);
+        
+        return menuBar;
+    }
+    
+    /**
+     * Closes the current console window.
+     * Will also shut the bot down if the tray icon is not supported.
+     */
+    public void dispose() {
+        if (console == null)
+            return;
+
+        if (!SystemTray.isSupported() || tray == null)
+            if(!shutdownBot()) 
+                return;
+        
+        console.dispose();
+        console = null;
+        
+        if(DiscordBot.hasInstance())
+            return;
+
+        destroyTray();
+        
+        if(PrintThread.hasInstance()) {
+            PrintThread printer = PrintThread.getInstance();
+
+            out.flush();
+            printer.removeOut(out);
+            printer.removeErr(out);
+            printer.kill();
+        }
+        
+        out.close();
+        out = null;
+        consoleOutput = null;
+    }
 	
-	public static void destroyTray() {
+	public void destroyTray() {
 		if(tray == null) return;
 		SystemTray.getSystemTray().remove(tray);
 		tray = null;
 	}
 	
-	public static boolean shutdown() {
-		int res = JOptionPane.showConfirmDialog(console,
-				"Are you sure?", "Shutdown Bot", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE);
-		
-		if(res == JOptionPane.YES_OPTION){
-			DiscordBot bot = DiscordBot.getInstance();
-			if(bot != null)
-				bot.shutdown();
-			
-			if(hasConsole()) {
-				console.dispose();
-				console = null;
-			}
-			
-			destroyTray();
-			
-			PrintThread.removeSTDOut(out);
-			PrintThread.removeSTDErr(out);
-			
-			out = null;
-			consoleOutput = null;
+	public boolean shutdownBot() {
+	    return shutdownBot(false);
+	}
+	
+	/**
+	 * @param force Determines whether the user should be prompted for a confirmation or not. force of true will cause no confirmation and immediately shutdown the bot.
+	 * @return Whether the bot has been shutdown or not. Will also return true if the bot has already been shutdown previously.
+	 */
+	public boolean shutdownBot(boolean force) {
+	    if(!DiscordBot.hasInstance()) {
+	        Logger.info("Attempted to shutdown the bot, but it seems to have already been shutdown.");
+	        return true;
+	    }
+	    
+	    if(!force) {
+	        int res = JOptionPane.showConfirmDialog(console,
+	                "Are you sure?", "Shutdown Bot", JOptionPane.YES_NO_OPTION,
+	                JOptionPane.QUESTION_MESSAGE);
+	        
+	        if(res != JOptionPane.YES_OPTION)
+	            return false;   
+	    }
 
-			Logger.info("Goodbye!");
-			PrintThread.kill();
-			return true;
-		}
-		return false;
+        try {
+            DiscordBot.getInstance().shutdown();            
+        }catch(Exception e) {
+            Logger.err("An error occured while attempting to shutdown the bot. It is unsure whether the bot is still running or not. This may cause some unexpected behavior. Please notify the developer.");
+            e.printStackTrace();
+            return false;
+        }
+        
+        Logger.info("The bot has been successfully shutdown! Closing this window will now terminate the program.");
+		return true;
 	}
 }

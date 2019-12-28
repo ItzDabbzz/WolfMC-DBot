@@ -11,8 +11,21 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessageListeners extends ListenerAdapter {
 
+    public EXPSystem xp = EXPSystem.getInstance();
+
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
+        if(e.getChannel().getIdLong() == 620316094317592581L && e.getChannel().getIdLong() == 658909111932551199L){ // Open-A-Ticket Channel
+            return;
+        }
+
+        //XP System
+        if(xp.canMemberGetXP(e.getMember()) && e.getAuthor().isBot()){
+            xp.randXP(e.getMember());
+            xp.setPlayerTime(e.getMember(), 60);
+        }
+
+        //Ticket System
         if(!e.isWebhookMessage() && !e.isFromType(ChannelType.GROUP) && !e.isFromType(ChannelType.PRIVATE)) {
                 ChannelTracker.getSupportChannel().ifPresent(channel -> {
                     if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot()) {
