@@ -26,7 +26,8 @@ public class XP extends Command{
 		if(!super.run(event, args))
 			return false;
 
-		EXPSystem xp = new EXPSystem();
+		EXPSystem xp = EXPSystem.getInstance();
+
 		//Respond.async(event.getChannel(), ":ping_pong: Your Ping Is " + DiscordBot.getInstance().getJDA() + ".");
 		event.getChannel().sendMessage("You have " + xp.getPlayerXP(event.getMember()) + " EXP").queue();
 		return true;

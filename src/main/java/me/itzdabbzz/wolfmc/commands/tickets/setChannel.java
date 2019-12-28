@@ -1,12 +1,17 @@
 package me.itzdabbzz.wolfmc.commands.tickets;
 
 import me.itzdabbzz.wolfmc.util.ChannelTracker;
+import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.cmd.Command;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.awt.*;
 import java.util.List;
 
 public class setChannel extends Command{
@@ -41,15 +46,40 @@ public class setChannel extends Command{
 				if(!channels.isEmpty()) {
 					TextChannel support = channels.get(0);
 					ChannelTracker.setChannel(support);
-					channel.sendMessage("The support channel was set to " + support).queue();
+					Message setChannel = new MessageBuilder()
+							.setEmbed(new EmbedBuilder()
+									.setDescription("Set Ticket Open Channel To "+ support)
+									.setColor(Constants.embedOrange)
+									.setAuthor("WolfMC Ticket System", null, "https://us.123rf.com/450wm/urfandadashov/urfandadashov1809/urfandadashov180901225/109135155-live-support-vector-icon-isolated-on-transparent-background-live-support-logo-concept.jpg?ver=6")
+									.build()).build();
+					channel.sendMessage(setChannel).queue();
 				} else {
-					channel.sendMessage(channelName + " does not exist!").queue();
+					Message setChannel = new MessageBuilder()
+							.setEmbed(new EmbedBuilder()
+									.setDescription(channelName + " does not exist!")
+									.setColor(Constants.embedOrange)
+									.setAuthor("WolfMC Ticket System", null, "https://us.123rf.com/450wm/urfandadashov/urfandadashov1809/urfandadashov180901225/109135155-live-support-vector-icon-isolated-on-transparent-background-live-support-logo-concept.jpg?ver=6")
+									.build()).build();
+					channel.sendMessage(setChannel).queue();
 				}
 			} else {
-				channel.sendMessage("You have entered an invalid amount of arguments!").queue();
+				Message setChannel = new MessageBuilder()
+						.setEmbed(new EmbedBuilder()
+								.setDescription("You have entered an invalid amount of arguments!")
+								.setColor(Constants.embedOrange)
+								.setAuthor("WolfMC Ticket System", null, "https://us.123rf.com/450wm/urfandadashov/urfandadashov1809/urfandadashov180901225/109135155-live-support-vector-icon-isolated-on-transparent-background-live-support-logo-concept.jpg?ver=6")
+								.build()).build();
+				channel.sendMessage(setChannel).queue();
 			}
 		} else {
 			channel.sendMessage("You do not have the permission to do that!").queue();
+			Message setChannel = new MessageBuilder()
+					.setEmbed(new EmbedBuilder()
+							.setDescription("You do not have the permission to do that!")
+							.setColor(Constants.embedRed)
+							.setAuthor("WolfMC Ticket System", null, "https://us.123rf.com/450wm/urfandadashov/urfandadashov1809/urfandadashov180901225/109135155-live-support-vector-icon-isolated-on-transparent-background-live-support-logo-concept.jpg?ver=6")
+							.build()).build();
+			channel.sendMessage(setChannel).queue();
 		}
 		return true;
 	}

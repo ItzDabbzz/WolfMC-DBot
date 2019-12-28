@@ -14,6 +14,16 @@ public class EXPSystem extends ListenerAdapter {
     HashMap<Member, Integer> playerXP = new HashMap<>();
     HashMap<Member, Integer> playerTimer = new HashMap<>();
 
+    private static EXPSystem instance;
+    public static EXPSystem getInstance() {
+        return instance;
+    }
+
+    public static void initialize() {
+        if(instance == null)
+            instance = new EXPSystem();
+    }
+
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
         if(canMemberGetXP(event.getMember())){
             randXP(event.getMember());
@@ -61,7 +71,7 @@ public class EXPSystem extends ListenerAdapter {
             }
         };
         timer.schedule(task, 0, 1000);
-        System.out.println("timer started");
+        //System.out.println("timer started");
     }
 
 }
