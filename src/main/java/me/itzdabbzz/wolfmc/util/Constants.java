@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc;
+package me.itzdabbzz.wolfmc.util;
 
 
 import net.dv8tion.jda.api.Permission;
@@ -11,6 +11,8 @@ import static net.dv8tion.jda.api.Permission.*;
 
 public class Constants {
 
+    public static final char COMMAND_CHAR = '!';
+    public static final String COMMAND_CHAR_STRING = String.valueOf(COMMAND_CHAR);
     public static Color embedCyan = new Color(0, 212, 255, 0);
     public static Color embedLime = new Color(127, 255, 121, 0);
     public static Color embedTeal = new Color(0, 255, 197, 0);

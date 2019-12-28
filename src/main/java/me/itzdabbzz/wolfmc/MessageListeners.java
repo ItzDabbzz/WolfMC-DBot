@@ -2,14 +2,12 @@ package me.itzdabbzz.wolfmc;
 
 import me.itzdabbzz.wolfmc.data.Ticket;
 import me.itzdabbzz.wolfmc.data.TicketTracker;
-import net.dv8tion.jda.api.entities.Category;
+import me.itzdabbzz.wolfmc.util.ChannelTracker;
+import me.itzdabbzz.wolfmc.util.Constants;
 import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
-import java.util.Optional;
 
 public class MessageListeners extends ListenerAdapter {
 
@@ -17,8 +15,9 @@ public class MessageListeners extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent e) {
         if(!e.isWebhookMessage() && !e.isFromType(ChannelType.GROUP) && !e.isFromType(ChannelType.PRIVATE)) {
                 ChannelTracker.getSupportChannel().ifPresent(channel -> {
-                    if(e.getMessage().getChannel().equals(channel) || !e.getAuthor().isBot()) {
-                        TicketTracker.addTicket(new Ticket(e));
+                    if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot()) {
+                        TicketTracker.addTicket(new Ticket(e, channel.getParent()));
+
                     }
                 });
         }

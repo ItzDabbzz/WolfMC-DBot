@@ -22,6 +22,13 @@ import java.io.IOException;
 
 public class WolfBot {
 
+    public static DiscordBot getClient() {
+        return discordBot;
+    }
+
+    public static DiscordBot discordBot;
+
+
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
@@ -31,12 +38,12 @@ public class WolfBot {
         Logger.infof("Hello World! From %s", Version.getVersion());
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "config/token.txt";
-        DiscordBot.initialize(fetchToken(tokenFile));
+        discordBot.initialize(fetchToken(tokenFile));
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
-        DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
-        DiscordBot.getInstance().addEventListener(new MessageListeners());
+        discordBot.getInstance().addEventListener(ReactionListener.getInstance());
+        discordBot.getInstance().addEventListener(new MessageListeners());
 
         DiscordBot.getInstance().addEventListener(new EXPSystem());
 

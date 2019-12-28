@@ -1,17 +1,12 @@
 package me.itzdabbzz.wolfmc.commands;
 
-import me.itzdabbzz.wolfmc.ChannelTracker;
-import me.itzdabbzz.wolfmc.WolfBot;
-import me.vem.jdab.DiscordBot;
+import me.itzdabbzz.wolfmc.util.ChannelTracker;
 import me.vem.jdab.cmd.Command;
-import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class setChannel extends Command{

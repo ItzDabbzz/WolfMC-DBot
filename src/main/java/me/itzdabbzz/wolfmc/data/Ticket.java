@@ -1,8 +1,7 @@
 package me.itzdabbzz.wolfmc.data;
 
 
-import me.itzdabbzz.wolfmc.Constants;
-import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
+import me.itzdabbzz.wolfmc.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
@@ -13,15 +12,16 @@ import java.util.concurrent.TimeUnit;
 
 public class Ticket {
 
-    public Ticket(MessageReceivedEvent e){
+    public Ticket(MessageReceivedEvent e, Category category){
         this.author = e.getMember();
         this.supportChannel = e.getChannel();
-        this.category = ticketChannel.getParent();
+        this.category = category;
         this.guild = e.getGuild();
         this.message = e.getMessage();
         this.ticketID = ticketID;
         this.ticketUser =  ticketUser;
         this.ticketReason = ticketReason;
+        createTicket();
     }
 
     private String ticketID;
@@ -33,7 +33,7 @@ public class Ticket {
     private final Category category;
     private final Guild guild;
     private TextChannel ticketChannel;
-    private static final String INFO = "\n\n*To close, react with " + Constants.CHECK + "*";
+    private static final String INFO = "\n\n*To close your ticket , react with " + Constants.CHECK + "*";
 
     public String getTicketID() {
         return ticketID;
@@ -82,10 +82,10 @@ public class Ticket {
         ticketChannel.putPermissionOverride(guild.getRolesByName("Staff", true).get(0)).setAllow(Constants.TICKET).queue();
         Message initMessage = new MessageBuilder()
                 .setEmbed(new EmbedBuilder()
-                        .setDescription(message.getContentDisplay() + INFO)
-                        .setColor(new Color(0x2CD900))
-                        .setAuthor("Ticket", null, null)
-                        .build()).build();
+                .setDescription(message.getContentDisplay() + INFO)
+                .setColor(new Color(0x2CD900))
+                .setAuthor("Ticket", null, null)
+                .build()).build();
         ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction(Constants.CHECK).queue());
     }
 

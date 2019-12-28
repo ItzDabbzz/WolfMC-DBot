@@ -2,15 +2,13 @@ package me.itzdabbzz.wolfmc.commands.ptero;
 
 import com.stanjg.ptero4j.PteroAdminAPI;
 import com.stanjg.ptero4j.entities.panel.admin.Server;
-import me.itzdabbzz.wolfmc.Constants;
+import me.itzdabbzz.wolfmc.util.Constants;
 import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
-import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class serverStatus extends SecureCommand {

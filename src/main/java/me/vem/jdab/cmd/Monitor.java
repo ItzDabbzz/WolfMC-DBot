@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import me.itzdabbzz.wolfmc.Constants;
+import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.DiscordBot;
 import me.vem.jdab.struct.MessagePurge;
 import me.vem.jdab.utils.ExtFileManager;
