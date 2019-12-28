@@ -72,14 +72,14 @@ public class ModLog extends SecureCommand {
 
 		String key = null;
 
-		if("add".equals(args[0]))
-			key = "stream.adduser";
-		else if("remove".equals(args[0]))
-			key = "stream.removeuser";
-		else if("channel".equals(args[0]))
-			key =  "stream.setchannel";
+		if("setchannel".equals(args[0]))
+			key = "modlog.setchannel";
+		else if("setcolor".equals(args[0]))
+			key = "modlog.setcolor";
+		else if("setresponse".equals(args[0]))
+			key =  "modlog.setresponse";
 		else if("response".equals(args[0]))
-			key = "stream.setresponse";
+			key = "modlog.response";
 		else return true;
 
 		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
