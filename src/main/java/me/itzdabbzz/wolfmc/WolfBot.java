@@ -2,13 +2,11 @@ package me.itzdabbzz.wolfmc;
 
 import me.itzdabbzz.wolfmc.commands.general.Ping;
 import me.itzdabbzz.wolfmc.commands.general.XP;
-import me.itzdabbzz.wolfmc.commands.moderation.Kick;
-import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
+import me.itzdabbzz.wolfmc.commands.moderation.*;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
 import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
 import me.itzdabbzz.wolfmc.commands.tickets.tadd;
 import me.vem.jdab.DiscordBot;
-import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.general.StreamTrack;
 import me.vem.jdab.utils.Console;
 import me.vem.jdab.utils.ExtFileManager;
@@ -22,13 +20,9 @@ import java.io.IOException;
 
 public class WolfBot {
 
-    public static DiscordBot getClient() {
-        return discordBot;
+    public static DiscordBot getClient(){
+        return DiscordBot.getInstance();
     }
-
-    public static DiscordBot discordBot;
-
-
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
@@ -38,14 +32,15 @@ public class WolfBot {
         Logger.infof("Hello World! From %s", Version.getVersion());
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "config/token.txt";
-        discordBot.initialize(fetchToken(tokenFile));
+        DiscordBot.initialize(fetchToken(tokenFile));
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
-        discordBot.getInstance().addEventListener(ReactionListener.getInstance());
-        discordBot.getInstance().addEventListener(new MessageListeners());
-
+        DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
+        DiscordBot.getInstance().addEventListener(new MessageListeners());
         DiscordBot.getInstance().addEventListener(new EXPSystem());
+        DiscordBot.getInstance().addEventListener(Monitor.getInstance());
+
 
         EXPSystem expSystem = new EXPSystem();
         expSystem.startTimer();
@@ -57,6 +52,8 @@ public class WolfBot {
         Kick.initialize();
         setChannel.initialize();
         tadd.initialize();
+
+        TempMute.initialize();
         //serverStatus.initialize();
     }
 

@@ -1,20 +1,11 @@
-package me.vem.jdab.cmd;
-
-import java.awt.Color;
-import java.io.File;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
+package me.itzdabbzz.wolfmc.commands.moderation;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.DiscordBot;
+import me.vem.jdab.cmd.Command;
+import me.vem.jdab.cmd.Configurable;
 import me.vem.jdab.struct.MessagePurge;
 import me.vem.jdab.utils.ExtFileManager;
 import me.vem.jdab.utils.Logger;
@@ -32,6 +23,12 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+
+import java.awt.*;
+import java.io.File;
+import java.time.Instant;
+import java.util.Queue;
+import java.util.*;
 
 public class Monitor extends Command implements EventListener, Configurable{
 
@@ -196,7 +193,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 			if (author.isBot())
 				return;
 			//embed.setDescription("**Message sent by** " + author.getAsMention() + " **deleted in** " + event.getChannel().getAsMention() + '\n' + msgInfo.getContent());
-			embed.addField(":wrench: Message Sent By: ", author.getAsMention() + "", true);
+			embed.addField(":wrench: Message Deleted By: ", author.getAsMention() + "", true);
 			embed.addField("Channel: ", event.getChannel().getAsMention(), true);
 			embed.addField("Message:" , msgInfo.getContent(), false);
 		}else {
@@ -260,7 +257,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 			return;
 		
 		EmbedBuilder embed = new EmbedBuilder().setColor(Color.RED);
-		embed.setAuthor(":question: Member Joined", null, event.getUser().getAvatarUrl());
+		embed.setAuthor(":question: Member Left", null, event.getUser().getAvatarUrl());
 		embed.setDescription('\\' + event.getUser().getAsMention() + " " + event.getUser().getName() + '#' + event.getUser().getDiscriminator());
 		embed.setFooter("User ID: " + event.getUser().getId(), null);
 		embed.setTimestamp(Instant.now());

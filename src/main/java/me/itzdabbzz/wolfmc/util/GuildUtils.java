@@ -1,11 +1,6 @@
 package me.itzdabbzz.wolfmc.util;
 
-import me.vem.jdab.cmd.Prefix;
 import net.dv8tion.jda.api.entities.*;
-
-import java.awt.*;
-import java.util.List;
-import java.util.Objects;
 
 public class GuildUtils {
 
@@ -27,9 +22,10 @@ public class GuildUtils {
 
     /**
      *
+     * @return
      */
-    public static void getRole(String string, Guild guild){
-        guild.getRolesByName(string, true);
+    public static Role getRole(String string, Guild guild){
+        return (Role) guild.getRolesByName(string, true);
     }
 
 }
