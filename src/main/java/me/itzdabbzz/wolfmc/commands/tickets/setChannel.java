@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc.commands;
+package me.itzdabbzz.wolfmc.commands.tickets;
 
 import me.itzdabbzz.wolfmc.util.ChannelTracker;
 import me.vem.jdab.cmd.Command;

@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc.commands;
+package me.itzdabbzz.wolfmc.commands.general;
 
 import me.itzdabbzz.wolfmc.EXPSystem;
 import me.vem.jdab.cmd.Command;

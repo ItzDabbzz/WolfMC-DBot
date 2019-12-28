@@ -1,16 +1,15 @@
 package me.itzdabbzz.wolfmc;
 
-import me.itzdabbzz.wolfmc.commands.Ping;
-import me.itzdabbzz.wolfmc.commands.XP;
+import me.itzdabbzz.wolfmc.commands.general.Ping;
+import me.itzdabbzz.wolfmc.commands.general.XP;
 import me.itzdabbzz.wolfmc.commands.moderation.Kick;
 import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
-import me.itzdabbzz.wolfmc.commands.ptero.serverStatus;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
-import me.itzdabbzz.wolfmc.commands.setChannel;
+import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
 import me.itzdabbzz.wolfmc.commands.tickets.tadd;
 import me.vem.jdab.DiscordBot;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
-import me.itzdabbzz.wolfmc.commands.StreamTrack;
+import me.itzdabbzz.wolfmc.commands.general.StreamTrack;
 import me.vem.jdab.utils.Console;
 import me.vem.jdab.utils.ExtFileManager;
 import me.vem.jdab.utils.Logger;

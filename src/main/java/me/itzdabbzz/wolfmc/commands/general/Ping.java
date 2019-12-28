@@ -1,15 +1,10 @@
-package me.itzdabbzz.wolfmc.commands;
+package me.itzdabbzz.wolfmc.commands.general;
 
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-
-import static java.time.temporal.ChronoUnit.MILLIS;
 
 public class Ping extends Command{
 

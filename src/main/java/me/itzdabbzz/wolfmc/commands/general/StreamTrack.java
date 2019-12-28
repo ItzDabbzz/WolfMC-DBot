@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc.commands;
+package me.itzdabbzz.wolfmc.commands.general;
 
 import java.io.File;
 import java.io.IOException;
