@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.itzdabbzz.wolfmc.commands.general.Ping;
 import me.itzdabbzz.wolfmc.commands.general.XP;
@@ -17,17 +19,23 @@ import me.itzdabbzz.wolfmc.commands.moderation.TempMute;
 import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
 import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
 import me.itzdabbzz.wolfmc.commands.tickets.tadd;
+import me.itzdabbzz.wolfmc.commands.tickets.tblacklist;
+import me.itzdabbzz.wolfmc.commands.tickets.tremove;
+import me.itzdabbzz.wolfmc.data.Ticket;
 import me.vem.jdab.DiscordBot;
 import me.vem.jdab.utils.Console;
 import me.vem.jdab.utils.ExtFileManager;
 import me.vem.jdab.utils.Logger;
 import me.vem.jdab.utils.Version;
+import net.dv8tion.jda.api.entities.Member;
 
 public class WolfBot {
 
     public static DiscordBot getClient(){
         return DiscordBot.getInstance();
     }
+
+
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
@@ -52,9 +60,10 @@ public class WolfBot {
         Kick.initialize();
         setChannel.initialize();
         tadd.initialize();
+        tblacklist.initialize();
+        tremove.initialize();
         Purge.initialize();
         AntiPurge.initialize();
-
         TempMute.initialize();
         //serverStatus.initialize();
     }

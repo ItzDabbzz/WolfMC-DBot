@@ -2,14 +2,19 @@ package me.itzdabbzz.wolfmc.util;
 
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static net.dv8tion.jda.api.Permission.*;
 
 public class Constants {
+
+    public static List<Member> blackList = new ArrayList<>();
+    public static List<Member> getBlackList() { return blackList; }
 
     public static final char COMMAND_CHAR = '!';
     public static final String COMMAND_CHAR_STRING = String.valueOf(COMMAND_CHAR);

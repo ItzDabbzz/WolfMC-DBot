@@ -1,5 +1,6 @@
 package me.itzdabbzz.wolfmc;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.data.Ticket;
 import me.itzdabbzz.wolfmc.data.TicketTracker;
 import me.itzdabbzz.wolfmc.util.ChannelTracker;
@@ -29,9 +30,11 @@ public class MessageListeners extends ListenerAdapter {
         if(!e.isWebhookMessage() && !e.isFromType(ChannelType.GROUP) && !e.isFromType(ChannelType.PRIVATE)) {
                 ChannelTracker.getSupportChannel().ifPresent(channel -> {
                     if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot()) {
-                        e.getMessage().delete();
-                        TicketTracker.addTicket(new Ticket(e, channel.getParent()));
-
+                        if (!Constants.blackList.contains(e.getAuthor()))
+                        {
+                            e.getMessage().delete();
+                            TicketTracker.addTicket(new Ticket(e, channel.getParent()));
+                        }
                     }
                 });
         }
