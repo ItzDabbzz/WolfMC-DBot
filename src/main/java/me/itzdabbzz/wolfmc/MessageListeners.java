@@ -29,12 +29,9 @@ public class MessageListeners extends ListenerAdapter {
         //Ticket System
         if(!e.isWebhookMessage() && !e.isFromType(ChannelType.GROUP) && !e.isFromType(ChannelType.PRIVATE)) {
                 ChannelTracker.getSupportChannel().ifPresent(channel -> {
-                    if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot()) {
-                        if (!Constants.blackList.contains(e.getAuthor()))
-                        {
+                    if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot() && !Constants.blackList.contains(e.getAuthor())){
                             e.getMessage().delete();
                             TicketTracker.addTicket(new Ticket(e, channel.getParent()));
-                        }
                     }
                 });
         }

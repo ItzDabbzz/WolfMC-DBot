@@ -36,11 +36,9 @@ public class tblacklist extends SecureCommand {
 		if(!super.run(event, args))
 			return false;
 
-		//String name = "ticket-" + event.getMember().getEffectiveName() + " - ";
-		Member member = Utilities.getMemberFromMention(event.getGuild(), event.getAuthor().getAsTag());
 		if("add".equals(args[0]))
 		{
-			Constants.getBlackList().add(Utilities.getMemberFromMention(event.getGuild(), args[1]));
+			Constants.blackList.add(Utilities.getMemberFromMention(event.getGuild(), args[1]));
 			Message ticketAdd = new MessageBuilder()
 					.setEmbed(new EmbedBuilder()
 							.setDescription("Blacklisted " + Utilities.getMemberFromMention(event.getGuild(), args[1]) + " to the ticket system.")
@@ -51,7 +49,7 @@ public class tblacklist extends SecureCommand {
 		}else
 			if("remove".equals(args[0]))
 			{
-				Constants.getBlackList().remove(Utilities.getMemberFromMention(event.getGuild(), args[1]));
+				Constants.blackList.remove(Utilities.getMemberFromMention(event.getGuild(), args[1]));
 				Message ticketAdd = new MessageBuilder()
 						.setEmbed(new EmbedBuilder()
 								.setDescription("Removed " +Utilities.getMemberFromMention(event.getGuild(), args[1]) + " from the Blacklist to the ticket system.")
