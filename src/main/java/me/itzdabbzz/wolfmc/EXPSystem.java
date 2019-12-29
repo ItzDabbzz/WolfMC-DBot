@@ -32,6 +32,8 @@ public class EXPSystem  {
     
     public int getPlayerXP(Member member)
     {
+        if(playerXP.containsKey(member))
+            setPlayerXP(member, 0);
         return playerXP.get(member);
     }
 

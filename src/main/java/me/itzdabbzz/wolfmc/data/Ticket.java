@@ -1,17 +1,16 @@
 package me.itzdabbzz.wolfmc.data;
 
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.util.Constants;
+import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
-public class Ticket {
+public class Ticket     {
 
     public Ticket(MessageReceivedEvent e, Category category){
         this.author = e.getMember();
@@ -35,6 +34,8 @@ public class Ticket {
     private final Guild guild;
     private TextChannel ticketChannel;
     private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*";
+    private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd, yyyy");
 
     public String getTicketID() {
         return ticketID;
@@ -61,6 +62,19 @@ public class Ticket {
     }
 
     public void closeIfValid() {
+
+
+        EmbedBuilder transcriptMessage = new EmbedBuilder();
+
+        transcriptMessage.setDescription("***Ticket Transcript***")
+                .setColor(Constants.embedTeal)
+                .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
+                .build();
+
+        Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage);
+
+        //Send file to channel 620316098390392885 - Long ID for ticket-logs
+
         Message closeMessage = new MessageBuilder()
                 .setEmbed(new EmbedBuilder()
                         .setDescription("***Ticket has been marked as closed!***")
@@ -69,6 +83,7 @@ public class Ticket {
                         .build()).build();
         ticketChannel.sendMessage(closeMessage).queue();
         ticketChannel.delete().completeAfter(3, TimeUnit.SECONDS);
+
     }
 
     public String getID() {
@@ -95,5 +110,4 @@ public class Ticket {
                 .build()).build();
         ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction(Constants.CHECK).queue());
     }
-
 }
