@@ -3,6 +3,7 @@ package me.itzdabbzz.wolfmc.commands.tickets;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
+import me.itzdabbzz.wolfmc.data.TicketBlacklist;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -38,7 +39,7 @@ public class tblacklist extends SecureCommand {
 
 		if("add".equals(args[0]))
 		{
-			Constants.blackList.add(Utilities.getMemberFromMention(event.getGuild(), args[1]));
+			TicketBlacklist.addPlayer(Utilities.getMemberFromMention(event.getGuild(), args[1]));
 			Message ticketAdd = new MessageBuilder()
 					.setEmbed(new EmbedBuilder()
 							.setDescription("Blacklisted " + Utilities.getMemberFromMention(event.getGuild(), args[1]) + " to the ticket system.")
@@ -49,7 +50,7 @@ public class tblacklist extends SecureCommand {
 		}else
 			if("remove".equals(args[0]))
 			{
-				Constants.blackList.remove(Utilities.getMemberFromMention(event.getGuild(), args[1]));
+				TicketBlacklist.removePlayer(Utilities.getMemberFromMention(event.getGuild(), args[1]));
 				Message ticketAdd = new MessageBuilder()
 						.setEmbed(new EmbedBuilder()
 								.setDescription("Removed " +Utilities.getMemberFromMention(event.getGuild(), args[1]) + " from the Blacklist to the ticket system.")

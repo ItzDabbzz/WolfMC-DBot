@@ -112,6 +112,8 @@ public class Ticket {
         });
     }
 
+
+
     private void sendMessage() {
         ticketChannel.putPermissionOverride(author).setAllow(Constants.TICKET).queue();
         ticketChannel.putPermissionOverride(guild.getRolesByName("Staff", true).get(0)).setAllow(Constants.TICKET).queue();
@@ -122,6 +124,9 @@ public class Ticket {
                 .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
                 .build()).build();
         ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction(Constants.CHECK).queue());
+        //ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction("U+1F4AC").queue());
+        //ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction("U+1F4B3").queue());
+        //ticketChannel.sendMessage(initMessage).queue(message -> message.addReaction("U+1F512").queue());
     }
 
     private GregorianCalendar day;

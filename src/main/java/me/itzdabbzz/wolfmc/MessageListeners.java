@@ -2,9 +2,11 @@ package me.itzdabbzz.wolfmc;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.data.Ticket;
+import me.itzdabbzz.wolfmc.data.TicketBlacklist;
 import me.itzdabbzz.wolfmc.data.TicketTracker;
 import me.itzdabbzz.wolfmc.util.ChannelTracker;
 import me.itzdabbzz.wolfmc.util.Constants;
+import me.vem.jdab.utils.emoji.Emoji;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -29,7 +31,7 @@ public class MessageListeners extends ListenerAdapter {
         //Ticket System
         if(!e.isWebhookMessage() && !e.isFromType(ChannelType.GROUP) && !e.isFromType(ChannelType.PRIVATE)) {
                 ChannelTracker.getSupportChannel().ifPresent(channel -> {
-                    if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot() && !Constants.blackList.contains(e.getAuthor())){
+                    if(e.getMessage().getChannel().equals(channel) && !e.getAuthor().isBot() && !TicketBlacklist.doesPlayerExist(e.getMember())){
                             e.getMessage().delete();
                             TicketTracker.addTicket(new Ticket(e, channel.getParent()));
                     }
@@ -40,6 +42,21 @@ public class MessageListeners extends ListenerAdapter {
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent e) {
         if(e.getReactionEmote().getName().equals(Constants.CHECK) && !e.getUser().isBot()) {
+            TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
+        }
+
+        //Support U+1F4AC
+        if(e.getReactionEmote().getName().equals(new Emoji("U+1F4AC")) && !e.getUser().isBot()) {
+            TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
+        }
+
+        //Sales U+1F4B3
+        if(e.getReactionEmote().getName().equals(new Emoji("U+1F4B3")) && !e.getUser().isBot()) {
+            TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
+        }
+
+        //Security 	U+1F512
+        if(e.getReactionEmote().getName().equals(new Emoji("U+1F512")) && !e.getUser().isBot()) {
             TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
         }
     }
