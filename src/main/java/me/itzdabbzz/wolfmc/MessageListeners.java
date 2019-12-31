@@ -1,6 +1,5 @@
 package me.itzdabbzz.wolfmc;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.data.Ticket;
 import me.itzdabbzz.wolfmc.data.TicketBlacklist;
 import me.itzdabbzz.wolfmc.data.TicketTracker;

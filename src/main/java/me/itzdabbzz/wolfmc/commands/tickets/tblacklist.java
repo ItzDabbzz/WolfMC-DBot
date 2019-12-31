@@ -1,6 +1,5 @@
 package me.itzdabbzz.wolfmc.commands.tickets;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
 import me.itzdabbzz.wolfmc.data.TicketBlacklist;
@@ -11,7 +10,6 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
