@@ -82,7 +82,7 @@ public class Ticket {
                 .setColor(Constants.embedTeal)
                 .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
                 .build();
-        File f = export(ticketChannel, ticketChannel.getName()+"_transcript/");
+        File f = export(ticketChannel, "ticketsLogs/"+ticketChannel.getName()+"_transcript/");
         guild.getTextChannelById(620316098390392885L).sendFile(f).queue();
         Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage);
 
