@@ -97,7 +97,7 @@ public class setChannel extends Command{
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+	public boolean hasPermissions(Member member, String... args) {
 		return true;
 	}
 

@@ -9,6 +9,7 @@ import me.vem.jdab.DiscordBot;
 import me.vem.jdab.utils.Logger;
 import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -71,11 +72,24 @@ public abstract class Command {
 				((Configurable)cmd).save();
 	}
 	
+	private final Command parentCommand;
+	private final List<Command> subCommands;
+	
 	private final String name;
 	
-	protected Command(String cmdname) {
-		this.name = cmdname;
-		addCommand(this);
+	protected Command(String cmdName) {
+	    this(cmdName, null);
+	}
+	
+	protected Command(String cmdName, Command parentCommand) {
+	    this.parentCommand = parentCommand;
+	    this.subCommands = new LinkedList<>();
+	    
+		this.name = cmdName;
+		
+		if(parentCommand == null)
+		    addCommand(this);
+		else parentCommand.registerSubCommand(this);
 	}
 	
 	/**
@@ -99,7 +113,7 @@ public abstract class Command {
 	 * @param args The command arguments.
 	 * @return true if the member given in the event has sufficient permissions to run this command/sub-command. False otherwise.
 	 */
-	public abstract boolean hasPermissions(GuildMessageReceivedEvent event, String... args);
+	public abstract boolean hasPermissions(Member member, String... args);
 	
 	/**
 	 * Required postcondition: The command can be reloaded after this method is called.
@@ -117,7 +131,7 @@ public abstract class Command {
 	 * For example: if the user calls the command correctly but lacks permissions, then it fails to do what the user intented, so it would return false.
 	 */
 	public boolean run(GuildMessageReceivedEvent event, String... args) {
-		if(!hasPermissions(event, args)) {
+		if(!hasPermissions(event.getMember(), args)) {
 			Respond.async(event.getChannel(), "You do not have the permissions to run this command.");
 			return false;
 		}
@@ -147,7 +161,31 @@ public abstract class Command {
 		return successful;
 	}
 	
+	protected Command getParentInstance() {
+	    return parentCommand;
+	}
+	
+	protected Command getSubCommand(String cmdName) {
+        if(cmdName == null || cmdName.isEmpty())
+            return null;
+        
+        for(Command c : subCommands)
+            if(c.name.equals(cmdName))
+                return c;
+        
+        return null;
+    }
+	
 	protected String getName() {
 		return name;
+	}
+	
+	private void registerSubCommand(Command cmd) {
+	    for(Command c : subCommands)
+            if(c.name.equals(cmd.name)) {
+                Logger.warnf("Cannot register '%s' as a subcommand of '%s' because another subcommand with its name (%s) has already been registered.", cmd.getClass().getName(), this.getClass().getName(), cmd.getName());
+                return;
+            }
+	    subCommands.add(cmd);
 	}
 }

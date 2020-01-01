@@ -108,8 +108,9 @@ public class StreamTrack extends SecureCommand implements EventListener, Configu
         return Arrays.asList("stream.setchannel", "stream.adduser", "stream.setresponse", "stream.removeuser");
     }
 
+
     @Override
-    public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+    public boolean hasPermissions( Member member , String... args ) {
         if(args.length == 0) return true;
 
         String key = null;
@@ -124,7 +125,7 @@ public class StreamTrack extends SecureCommand implements EventListener, Configu
             key = "stream.setresponse";
         else return true;
 
-        return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
+        return Permissions.getInstance().hasPermissionsFor(member, key);
     }
 
     @Override
@@ -138,6 +139,7 @@ public class StreamTrack extends SecureCommand implements EventListener, Configu
                 " - `%url%` will be replaced with the twitch url of the streamer."
         };
     }
+
 
     @Override protected void unload() {
         save();

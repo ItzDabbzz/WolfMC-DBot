@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.general;
 
 import me.itzdabbzz.wolfmc.EXPSystem;
 import me.vem.jdab.cmd.Command;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class XP extends Command{
@@ -39,14 +40,15 @@ public class XP extends Command{
 	}
 
 	@Override
+	public boolean hasPermissions( Member member , String... args ) {
+		return false;
+	}
+
+	@Override
 	public String getDescription() {
 		return "Shows your XP";
 	}
 
-	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
-		return true;
-	}
 
 	@Override
 	protected void unload() {

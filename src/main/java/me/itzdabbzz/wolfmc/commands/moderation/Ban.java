@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.moderation;
 
 
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 
@@ -10,67 +11,53 @@ import java.util.List;
 
 public class Ban extends SecureCommand{
 
-	private static Ban instance;
-	public static Ban getInstance() {
-		return instance;
-	}
+    private static Ban instance;
+    public static Ban getInstance() {
+        return instance;
+    }
 
-	public static void initialize() {
-		if(instance == null)
-			instance = new Ban();
-	}
+    public static void initialize() {
+        if(instance == null)
+            instance = new Ban();
+    }
 
-	private Ban() {
-		super("kick");
+    private Ban() {
+        super("ban");
 
-	}
+    }
 
-	@Override
-	public boolean run(GuildMessageReceivedEvent event, String... args) {
-		if(!super.run(event, args))
-			return false;
+    @Override
+    public boolean run(GuildMessageReceivedEvent event, String... args) {
+        if(!super.run(event, args))
+            return false;
 
 
 
-		return true;
-	}
-	
-	@Override
-	public String[] usages() {
-		return new String[] {"`kick <member>` -- kicks a user from the server"};
-	}
+        return true;
+    }
 
-	@Override
-	public String getDescription() {
-		return "Kicks a user from the server";
-	}
+    @Override
+    public String[] usages() {
+        return new String[] {"`ban <member>` -- bans a user from the server"};
+    }
 
-	@Override
-	public List<String> getValidKeySet() {
-		return Arrays.asList("stream.setchannel", "stream.adduser", "stream.setresponse", "stream.removeuser");
-	}
+    @Override
+    public String getDescription() {
+        return "Bans a user from the server";
+    }
 
-	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
-		if(args.length == 0) return true;
+    @Override
+    public List<String> getValidKeySet() {
+        return Arrays.asList("moderation.ban");
+    }
 
-		String key = null;
+    @Override
+    public boolean hasPermissions( Member member, String... args) {
+        return Permissions.getInstance().hasPermissionsFor(member, "moderation.ban");
+    }
 
-		if("add".equals(args[0]))
-			key = "stream.adduser";
-		else if("remove".equals(args[0]))
-			key = "stream.removeuser";
-		else if("channel".equals(args[0]))
-			key =  "stream.setchannel";
-		else if("response".equals(args[0]))
-			key = "stream.setresponse";
-		else return true;
-
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
-	}
-
-	@Override
-	protected void unload() {
-		instance = null;
-	}
+    @Override
+    protected void unload() {
+        instance = null;
+    }
 }

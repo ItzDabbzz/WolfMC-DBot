@@ -1,6 +1,8 @@
 package me.itzdabbzz.wolfmc.util;
 
 import me.itzdabbzz.wolfmc.WolfBot;
+import me.vem.jdab.utils.Logger;
+import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -8,11 +10,13 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 
 import java.awt.*;
+import java.io.File;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,10 +33,46 @@ public class Utils {
 
     private static JDA cachedJDA;
 
+    /**
+     TODO: Use These More
+     */
+
     public static void sendPM(User user, String message) {
         try {
             user.openPrivateChannel().complete()
                     .sendMessage(message.substring(0, Math.min(message.length(), 1999))).queue();
+        } catch (ErrorResponseException ignored) {
+        }
+    }
+
+    public static void sendFilePM(User user, String message, File file) {
+        try {
+            user.openPrivateChannel().complete()
+                    .sendMessage(message).addFile(file).queue();
+        } catch (ErrorResponseException ignored) {
+        }
+    }
+
+    public static void sendFilePM(User user, EmbedBuilder message, File file) {
+        try {
+            user.openPrivateChannel().complete()
+                    .sendMessage(message.build()).addFile(file).queue();
+        } catch (ErrorResponseException ignored) {
+        }
+    }
+
+    public static void sendPM(User user, Message message) {
+        try {
+            user.openPrivateChannel().complete()
+                    .sendMessage(message).queue();
+        } catch (ErrorResponseException ignored) {
+        }
+    }
+
+    public static void sendEmbededPM(User user, EmbedBuilder message) {
+        try {
+            user.openPrivateChannel().complete()
+                    .sendMessage(message.build()).queue();
         } catch (ErrorResponseException ignored) {
         }
     }
@@ -219,6 +259,30 @@ public class Utils {
         sendMessage(MessageType.MODERATION, message, channel, sender);
     }
 
+    /**
+    TODO: Setup Embeded SendAndLog Messages
+     */
+
+    public static void sendAndLogInfo(MessageType type, String message, TextChannel channel) {
+        sendMessage(message, channel);
+        Logger.info(message);
+    }
+
+    public static void sendAndLogErr(MessageType type, String message, TextChannel channel) {
+        sendMessage(message, channel);
+        Logger.err(message);
+    }
+
+    public static void sendAndLogWarn(MessageType type, String message, TextChannel channel) {
+        sendMessage(message, channel);
+        Logger.warn(message);
+    }
+
+    public static void sendAndLogDebug(MessageType type, String message, TextChannel channel) {
+        sendMessage(message, channel);
+        Logger.debug(message);
+    }
+
     public static void editMessage(EmbedBuilder embed, Message message) {
         editMessage(message.getContentRaw(), embed, message);
     }
@@ -303,6 +367,68 @@ public class Utils {
      */
     public static String colourFormat(Color color) {
         return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public static TimeUnit parseTimeUnit(String time){
+        TimeUnit unit = TimeUnit.SECONDS;
+        String str;
+        char[] t = time.toCharArray();
+        int breakPoint = 0;
+        String amount = "";
+        int parsedAmount = 0;
+        for(int i = 0; i < t.length; i++){
+            if(t[i] == 's' || t[i] == 'S'){
+                unit = TimeUnit.SECONDS;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'm' || t[i] == 'M'){
+                unit = TimeUnit.MINUTES;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'h' || t[i] == 'H'){
+                unit = TimeUnit.HOURS;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'd' || t[i] == 'D'){
+                unit = TimeUnit.DAYS;
+                breakPoint = i;
+                break;
+            }
+        }
+        return unit;
+    }
+
+    public static int parseTimeAmount(String time){
+        TimeUnit unit = TimeUnit.SECONDS;
+        String str;
+        char[] t = time.toCharArray();
+        int breakPoint = 0;
+        String amount = "";
+        int parsedAmount = 0;
+        for(int i = 0; i < t.length; i++){
+            if(t[i] == 's' || t[i] == 'S'){
+                unit = TimeUnit.SECONDS;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'm' || t[i] == 'M'){
+                unit = TimeUnit.MINUTES;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'h' || t[i] == 'H'){
+                unit = TimeUnit.HOURS;
+                breakPoint = i;
+                break;
+            }else if(t[i] == 'd' || t[i] == 'D'){
+                unit = TimeUnit.DAYS;
+                breakPoint = i;
+                break;
+            }
+        }
+        for(int i = 0; i < breakPoint; i++){
+            amount += t[i];
+        }
+        parsedAmount = Integer.parseInt(amount);
+        return parsedAmount;
     }
 
 }

@@ -1,6 +1,7 @@
 package me.itzdabbzz.wolfmc.data;
 
 import me.itzdabbzz.wolfmc.util.Constants;
+import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.utils.ExtFileManager;
 import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -76,18 +77,34 @@ public class Ticket {
     public void closeIfValid() {
 
 
+        /**
+         * Send the Ticket Transcript
+         */
         EmbedBuilder transcriptMessage = new EmbedBuilder();
 
         transcriptMessage.setDescription("***Ticket Transcript***")
                 .setColor(Constants.embedTeal)
-                .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
-                .build();
+                .setDescription("Ticket Data")
+                //.addField("Ticket ID", getTicketID() + "", true)
+                //.addField("Ticket Author", getTicketUser() + "", true)
+                //.addField("Ticket Reason", getTicketReason() + "", true)
+                .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg");
         File f = export(ticketChannel, "ticketsLogs/"+ticketChannel.getName()+"_transcript/");
-        guild.getTextChannelById(620316098390392885L).sendFile(f).queue();
-        Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage);
 
-        //Send file to channel 620316098390392885 - Long ID for ticket-logs
+        if(Constants.ticketTranscriptInChannel)
+        {
+            guild.getTextChannelById(620316098390392885L).sendFile(f).queue();
+            Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage.build());
+        }
 
+        //Utils.sendEmbededPM(author.getUser(), transcriptMessage);
+        Utils.sendFilePM(author.getUser(), transcriptMessage, f);
+
+
+        /**
+         * Mark Ticket As Closed
+         * Send Message And Delete Channel
+         */
         Message closeMessage = new MessageBuilder()
                 .setEmbed(new EmbedBuilder()
                         .setDescription("***Ticket has been marked as closed!***")

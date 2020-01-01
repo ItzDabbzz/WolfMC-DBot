@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.general;
 
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.time.temporal.ChronoUnit;
@@ -40,13 +41,13 @@ public class Ping extends Command{
 	}
 
 	@Override
-	public String getDescription() {
-		return "Prints the bots ping";
+	public boolean hasPermissions( Member member , String... args ) {
+		return true;
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
-		return true;
+	public String getDescription() {
+		return "Prints the bots ping";
 	}
 
 	@Override

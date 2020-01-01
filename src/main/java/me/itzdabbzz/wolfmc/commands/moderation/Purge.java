@@ -90,8 +90,8 @@ public class Purge extends SecureCommand{
 	}
 	
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), "purge");
+	public boolean hasPermissions(Member member, String... args) {
+		return Permissions.getInstance().hasPermissionsFor(member, "moderation.purge");
 	}
 	
 	@Override
@@ -112,7 +112,7 @@ public class Purge extends SecureCommand{
 	}
 	@Override
 	public List<String> getValidKeySet() {
-		return Arrays.asList("purge");
+		return Arrays.asList("moderation.purge");
 	}
 	@Override
 	public String getDescription() {

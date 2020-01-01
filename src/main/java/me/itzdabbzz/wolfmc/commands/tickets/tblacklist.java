@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class tblacklist extends SecureCommand {
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+	public boolean hasPermissions(Member member, String... args) {
 		if(args.length == 0) return true;
 
 		String key = null;
@@ -95,7 +94,7 @@ public class tblacklist extends SecureCommand {
 			key = "ticket.blacklist";
 		else return true;
 
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
+		return Permissions.getInstance().hasPermissionsFor(member, key);
 	}
 
 	@Override

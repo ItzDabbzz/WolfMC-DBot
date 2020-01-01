@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.moderation;
 
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -73,7 +74,7 @@ public class ModLog extends SecureCommand {
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+	public boolean hasPermissions( Member member, String... args) {
 		if(args.length == 0) return true;
 
 		String key = null;
@@ -88,6 +89,6 @@ public class ModLog extends SecureCommand {
 			key = "modlog.response";
 		else return true;
 
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
+		return Permissions.getInstance().hasPermissionsFor(member, key);
 	}
 }

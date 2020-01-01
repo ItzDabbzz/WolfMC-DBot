@@ -1,16 +1,13 @@
 package me.itzdabbzz.wolfmc.commands.moderation;
 
-import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Kick extends Command{
+public class Kick extends SecureCommand{
 
 	private static Kick instance;
 	public static Kick getInstance() {
@@ -61,8 +58,19 @@ public class Kick extends Command{
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
-		return true;
+	public List<String> getValidKeySet() { return Arrays.asList("moderation.kick"); }
+
+	@Override
+	public boolean hasPermissions(Member member, String... args) {
+		if(args.length == 0) return true;
+
+		String key = null;
+
+		if("kick".equals(args[0]))
+			key = "moderation.kick";
+		else return true;
+
+		return Permissions.getInstance().hasPermissionsFor(member, key);
 	}
 
 	@Override

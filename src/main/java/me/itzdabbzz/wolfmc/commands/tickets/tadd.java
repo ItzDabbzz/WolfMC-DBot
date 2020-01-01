@@ -75,7 +75,7 @@ public class tadd extends SecureCommand {
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+	public boolean hasPermissions(Member member, String... args) {
 		if(args.length == 0) return true;
 
 		String key = null;
@@ -84,7 +84,7 @@ public class tadd extends SecureCommand {
 			key = "ticket.useradd";
 		else return true;
 
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
+		return Permissions.getInstance().hasPermissionsFor(member, key);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import me.itzdabbzz.wolfmc.data.TicketBlacklist;
 import me.itzdabbzz.wolfmc.data.TicketTracker;
 import me.itzdabbzz.wolfmc.util.ChannelTracker;
 import me.itzdabbzz.wolfmc.util.Constants;
+import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.utils.emoji.Emoji;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -14,6 +15,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class MessageListeners extends ListenerAdapter {
 
     public EXPSystem xp = EXPSystem.getInstance();
+    private WolfBot bot;
 
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
@@ -44,8 +46,9 @@ public class MessageListeners extends ListenerAdapter {
             TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
         }
 
+
         //Support U+1F4AC
-        if(e.getReactionEmote().getName().equals(new Emoji("U+1F4AC")) && !e.getUser().isBot()) {
+        /*if(e.getReactionEmote().getName().equals(new Emoji("U+1F4AC")) && !e.getUser().isBot()) {
             TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
         }
 
@@ -57,7 +60,7 @@ public class MessageListeners extends ListenerAdapter {
         //Security 	U+1F512
         if(e.getReactionEmote().getName().equals(new Emoji("U+1F512")) && !e.getUser().isBot()) {
             TicketTracker.getTicketFromID(e.getChannel().getId()).ifPresent(Ticket::closeIfValid);
-        }
+        }*/
     }
 }
 

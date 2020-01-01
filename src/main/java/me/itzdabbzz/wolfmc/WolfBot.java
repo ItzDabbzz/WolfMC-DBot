@@ -16,12 +16,12 @@ import me.itzdabbzz.wolfmc.commands.moderation.Monitor;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.moderation.Purge;
 import me.itzdabbzz.wolfmc.commands.moderation.TempMute;
-import me.itzdabbzz.wolfmc.commands.reaction.ReactionListener;
 import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
 import me.itzdabbzz.wolfmc.commands.tickets.tadd;
 import me.itzdabbzz.wolfmc.commands.tickets.tblacklist;
 import me.itzdabbzz.wolfmc.commands.tickets.tremove;
 import me.itzdabbzz.wolfmc.data.Ticket;
+import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.DiscordBot;
 import me.vem.jdab.utils.Console;
 import me.vem.jdab.utils.ExtFileManager;
@@ -34,8 +34,8 @@ public class WolfBot {
     public static DiscordBot getClient(){
         return DiscordBot.getInstance();
     }
-
-
+    public static Utils utils;
+    public static Utils getUtils() { return utils; }
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
@@ -49,7 +49,7 @@ public class WolfBot {
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
         Permissions.initialize();
-        DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
+        //DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
         DiscordBot.getInstance().addEventListener(new MessageListeners());
         DiscordBot.getInstance().addEventListener(Monitor.getInstance());
         

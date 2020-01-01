@@ -67,7 +67,7 @@ public class tremove extends SecureCommand {
 	}
 
 	@Override
-	public boolean hasPermissions(GuildMessageReceivedEvent event, String... args) {
+	public boolean hasPermissions(Member member, String... args) {
 		if(args.length == 0) return true;
 
 		String key = null;
@@ -76,7 +76,7 @@ public class tremove extends SecureCommand {
 			key = "ticket.useremove";
 		else return true;
 
-		return Permissions.getInstance().hasPermissionsFor(event.getMember(), key);
+		return Permissions.getInstance().hasPermissionsFor(member, key);
 	}
 
 	@Override
