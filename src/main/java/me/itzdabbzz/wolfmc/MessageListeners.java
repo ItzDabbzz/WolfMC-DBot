@@ -17,6 +17,7 @@ public class MessageListeners extends ListenerAdapter {
     public EXPSystem xp = EXPSystem.getInstance();
     private WolfBot bot;
 
+
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         if(e.getChannel().getIdLong() == 620316094317592581L && e.getChannel().getIdLong() == 658909111932551199L){ // Open-A-Ticket Channel

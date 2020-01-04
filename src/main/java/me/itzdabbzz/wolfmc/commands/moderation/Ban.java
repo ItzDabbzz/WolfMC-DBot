@@ -2,6 +2,7 @@ package me.itzdabbzz.wolfmc.commands.moderation;
 
 
 
+import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -31,6 +32,20 @@ public class Ban extends SecureCommand{
         if(!super.run(event, args))
             return false;
 
+        List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
+        if(mentionedMembers.isEmpty()) {
+            Respond.async(event.getChannel(), "You must mention who you want to be ban");
+            return false;
+        }
+//		mentionedMembers.remove("WolfBot");
+
+        Member member = event.getGuild().getMemberById(mentionedMembers.get(0).getId());
+        System.out.println(member.getNickname());
+        member.ban(7).queue(success-> {
+            Respond.async(event.getChannel(),"Successfully banned " + mentionedMembers.get(0).getUser().getName());
+        }, error->{
+            Respond.async(event.getChannel(),"Unable to ban " + mentionedMembers.get(0).getUser().getName() + ": " + error);
+        });
 
 
         return true;

@@ -43,7 +43,7 @@ public class Ticket {
     private final Category category;
     private final Guild guild;
     private TextChannel ticketChannel;
-    private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*";
+    private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*" + "\n\n Please @ <@&620316100680351800> , <@&620316100965564417> , or <@&620316101796036628> depending on who you need.\n <@&614473605958598669> will be here to help you shortly.";
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd, yyyy");
 
@@ -136,7 +136,7 @@ public class Ticket {
         ticketChannel.putPermissionOverride(guild.getRolesByName("Staff", true).get(0)).setAllow(Constants.TICKET).queue();
         Message initMessage = new MessageBuilder()
                 .setEmbed(new EmbedBuilder()
-                .setDescription(message.getContentDisplay() + INFO)
+                .setDescription("Reason: " + message.getContentDisplay() + INFO)
                 .setColor(Constants.embedCyan)
                 .setAuthor("WolfMC Ticket System", null, "https://mpng.pngfly.com/20180423/htq/kisspng-computer-icons-ticket-cinema-ticket-vector-5addf7381775f4.6435650615244961840961.jpg")
                 .build()).build();

@@ -18,7 +18,6 @@ public class GuildWrapper {
 
     private String guildId;
     private String mutedRoleID = null;
-    private ReportManager reportManager = new ReportManager();
     private Map<String, List<String>> warnings = new ConcurrentHashMap<>();
 
     /**
@@ -94,10 +93,6 @@ public class GuildWrapper {
         });
     }
 
-    public ReportManager getReportManager() {
-        if (reportManager == null) reportManager = new ReportManager();
-        return reportManager;
-    }
 
     public List<String> getUserWarnings(User user) {
         if (warnings == null) warnings = new ConcurrentHashMap<>();

@@ -1,16 +1,9 @@
 package me.itzdabbzz.wolfmc.commands.moderation;
 
-import me.itzdabbzz.wolfmc.data.ModerationEmbeds;
-import me.itzdabbzz.wolfmc.util.GuildUtils;
 import me.itzdabbzz.wolfmc.util.Utils;
-import me.vem.jdab.cmd.Command;
-import me.vem.jdab.utils.Respond;
-import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.hooks.SubscribeEvent;
 
 import java.util.Arrays;
 import java.util.List;

@@ -15,7 +15,7 @@ public class Constants {
 
 
 
-    public static Boolean ticketTranscriptInChannel = false;
+    public static Boolean ticketTranscriptInChannel = true;
 
     public static final char COMMAND_CHAR = '!';
     public static final String COMMAND_CHAR_STRING = String.valueOf(COMMAND_CHAR);

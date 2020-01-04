@@ -7,20 +7,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.itzdabbzz.wolfmc.commands.administration.Announcement;
 import me.itzdabbzz.wolfmc.commands.general.Ping;
 import me.itzdabbzz.wolfmc.commands.general.XP;
-import me.itzdabbzz.wolfmc.commands.moderation.AntiPurge;
-import me.itzdabbzz.wolfmc.commands.moderation.Kick;
-import me.itzdabbzz.wolfmc.commands.moderation.ModLog;
-import me.itzdabbzz.wolfmc.commands.moderation.Monitor;
-import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
-import me.itzdabbzz.wolfmc.commands.moderation.Purge;
-import me.itzdabbzz.wolfmc.commands.moderation.TempMute;
+import me.itzdabbzz.wolfmc.commands.moderation.*;
 import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
 import me.itzdabbzz.wolfmc.commands.tickets.tadd;
 import me.itzdabbzz.wolfmc.commands.tickets.tblacklist;
 import me.itzdabbzz.wolfmc.commands.tickets.tremove;
 import me.itzdabbzz.wolfmc.data.Ticket;
+import me.itzdabbzz.wolfmc.objects.GuildWrapper;
 import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.DiscordBot;
 import me.vem.jdab.utils.Console;
@@ -39,7 +35,7 @@ public class WolfBot {
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
-        Version.initialize(0,0,1,1, "WolfMC");
+        Version.initialize(0,0,1,8, "WolfMC");
         Console.initialize();
 
         Logger.infof("Hello World! From %s", Version.getVersion());
@@ -52,7 +48,7 @@ public class WolfBot {
         //DiscordBot.getInstance().addEventListener(ReactionListener.getInstance());
         DiscordBot.getInstance().addEventListener(new MessageListeners());
         DiscordBot.getInstance().addEventListener(Monitor.getInstance());
-        
+
         EXPSystem.initialize();
         Ping.initialize();
         ModLog.initialize();
@@ -65,6 +61,10 @@ public class WolfBot {
         Purge.initialize();
         AntiPurge.initialize();
         TempMute.initialize();
+        Announcement.initialize();
+        Reports.initialize();
+        ForceSave.initialize();
+        VoiceKick.initialize();
         //serverStatus.initialize();
     }
 

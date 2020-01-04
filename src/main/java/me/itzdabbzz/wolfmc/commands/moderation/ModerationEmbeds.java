@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc.data;
+package me.itzdabbzz.wolfmc.commands.moderation;
 
 import me.itzdabbzz.wolfmc.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;

@@ -2,8 +2,10 @@ package me.itzdabbzz.wolfmc.commands.moderation;
 
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
+import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Arrays;
@@ -90,5 +92,13 @@ public class ModLog extends SecureCommand {
 		else return true;
 
 		return Permissions.getInstance().hasPermissionsFor(member, key);
+	}
+
+	public static void log( Member author, User target, String reason, String channel, ModAction action, long caseNumber, int messagesDeleted){
+
+	}
+
+	public enum ModAction {
+		TEMP_BAN, BAN, KICK, MUTE, UNMUTE, WARN, PRUNE
 	}
 }
