@@ -41,6 +41,8 @@ public class GuildWrapper {
         return Long.parseLong(this.guildId);
     }
 
+    //TODO: USE getMutedRole()
+
     @Nullable
     public Role getMutedRole() {
         if (mutedRoleID == null) {

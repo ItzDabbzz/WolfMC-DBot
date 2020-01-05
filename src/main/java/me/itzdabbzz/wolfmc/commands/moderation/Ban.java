@@ -43,6 +43,7 @@ public class Ban extends SecureCommand{
         System.out.println(member.getNickname());
         member.ban(7).queue(success-> {
             Respond.async(event.getChannel(),"Successfully banned " + mentionedMembers.get(0).getUser().getName());
+            ModerationEmbeds.banEmbed( mentionedMembers.get( 0 ), event.getMember(), "", event.getGuild().getTextChannelById( 657726698800021535L ) );
         }, error->{
             Respond.async(event.getChannel(),"Unable to ban " + mentionedMembers.get(0).getUser().getName() + ": " + error);
         });

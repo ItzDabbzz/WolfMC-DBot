@@ -40,6 +40,7 @@ public class Kick extends SecureCommand{
 		System.out.println(member.getNickname());
 		member.kick().queue(success-> {
 			Respond.async(event.getChannel(),"Successfully kicked " + mentionedMembers.get(0).getUser().getName());
+			ModerationEmbeds.kickEmbed( member, event.getMember(), "", event.getGuild().getTextChannelById( 657726698800021535L ) );
 		}, error->{
 			Respond.async(event.getChannel(),"Unable to kick " + mentionedMembers.get(0).getUser().getName() + ": " + error);
 		});

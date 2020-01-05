@@ -1,14 +1,8 @@
 package me.itzdabbzz.wolfmc.commands.tickets;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
-import me.itzdabbzz.wolfmc.util.ChannelTracker;
+import me.itzdabbzz.wolfmc.data.ChannelTracker;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.cmd.Command;
-import me.vem.jdab.cmd.Configurable;
-import me.vem.jdab.utils.ExtFileManager;
-import me.vem.jdab.utils.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -17,11 +11,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
 public class setChannel extends Command {

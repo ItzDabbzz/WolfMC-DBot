@@ -50,7 +50,6 @@ public class TempMute extends SecureCommand {
 
 		toMute.getRoles().add(muteRole);*/
 
-		if("tempmute".equals(args[0])){
 			if(args.length <= 2){
 				Utils.sendErrorMessage("", event.getChannel());
 			}else{
@@ -66,7 +65,6 @@ public class TempMute extends SecureCommand {
 				}
 				ModerationEmbeds.tempMuteEmbed(target, event.getMember(), " ", event.getGuild().getTextChannelById(657726698800021535L));
 			}
-		}
 
 		return true;
 	}

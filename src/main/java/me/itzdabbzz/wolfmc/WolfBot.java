@@ -54,6 +54,7 @@ public class WolfBot {
         ModLog.initialize();
         XP.initialize();
         Kick.initialize();
+        Ban.initialize();
         setChannel.initialize();
         tadd.initialize();
         tblacklist.initialize();

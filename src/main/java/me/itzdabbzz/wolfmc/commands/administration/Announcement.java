@@ -40,9 +40,9 @@ public class Announcement extends SecureCommand{
 
         EmbedBuilder eb = new EmbedBuilder()
                 .setColor( Constants.embedPink )
-                .setAuthor("WolfMC", "http://wolfmc.net", author.getAvatarUrl())
+                .setAuthor(event.getAuthor() + "'s Announcement", "http://wolfmc.net", null)
                 .setDescription(message)
-                .setFooter("WolfMC Network", "");
+                .setFooter("WolfMC Network", "http://wolfmc.net/noBackground.png");
 
         event.getJDA().getGuilds().stream()
                 .forEach(g -> {

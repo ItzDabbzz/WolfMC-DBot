@@ -1,4 +1,4 @@
-package me.itzdabbzz.wolfmc.util;
+package me.itzdabbzz.wolfmc.data;
 
 import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.TextChannel;
