@@ -48,6 +48,8 @@ public class StrawPoll extends Command{
 		 * DupCheckType.PERMISSIVE - This makes the poll more lenient in vote duplication checking.
 		 * DupCheckType.DISABLED - This disables duplication checking for the poll.
 		 *
+		 *  https://github.com/Samuel-Maddock/StrawPoll-Java-API
+		 *
 		 * StrawPoll strawPoll = new StrawPoll(title, options, isMulti, hasCaptcha, DupCheck);
 		 */
 

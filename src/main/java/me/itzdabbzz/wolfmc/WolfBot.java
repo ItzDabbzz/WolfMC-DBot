@@ -9,6 +9,7 @@ import java.util.List;
 
 import me.itzdabbzz.wolfmc.commands.administration.Announcement;
 import me.itzdabbzz.wolfmc.commands.general.Ping;
+import me.itzdabbzz.wolfmc.commands.general.Status;
 import me.itzdabbzz.wolfmc.commands.general.XP;
 import me.itzdabbzz.wolfmc.commands.moderation.*;
 import me.itzdabbzz.wolfmc.commands.tickets.setChannel;
@@ -66,6 +67,7 @@ public class WolfBot {
         Reports.initialize();
         ForceSave.initialize();
         VoiceKick.initialize();
+        Status.initialize();
         //serverStatus.initialize();
     }
 
