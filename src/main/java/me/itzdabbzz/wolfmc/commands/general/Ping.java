@@ -21,16 +21,17 @@ public class Ping extends Command{
 
 	private Ping() {
 		super("ping");
+
 	}
 
 	@Override
 	public boolean run(GuildMessageReceivedEvent event, String... args) {
 		if(!super.run(event, args))
 			return false;
-
+		
+		//Respond.async(event.getChannel(), ":ping_pong: Your Ping Is " + DiscordBot.getInstance().getJDA() + ".");
 		long ping = event.getMessage().getTimeCreated().until(event.getMessage().getTimeCreated(), ChronoUnit.MILLIS);
 		Respond.async(event.getChannel(), "Ping: " + ping  + "ms | Websocket: " + event.getJDA().getGatewayPing() + "ms");
-
 		return true;
 	}
 	
