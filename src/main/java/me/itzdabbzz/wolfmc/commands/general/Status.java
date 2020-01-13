@@ -2,6 +2,9 @@ package me.itzdabbzz.wolfmc.commands.general;
 
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.itzdabbzz.wolfmc.util.MineStat;
+import me.itzdabbzz.wolfmc.util.mcping.MinecraftPing;
+import me.itzdabbzz.wolfmc.util.mcping.MinecraftPingOptions;
+import me.itzdabbzz.wolfmc.util.mcping.MinecraftPingReply;
 import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
 import me.vem.jdab.utils.emoji.Emoji;
@@ -28,26 +31,35 @@ public class Status extends Command{
 		super("status");
 	}
 
+	@lombok.SneakyThrows
 	@Override
 	public boolean run(GuildMessageReceivedEvent event, String... args) {
 		if(!super.run(event, args))
 			return false;
 
-		MineStat ms = new MineStat("216.82.132.117", 25565);
-		if(ms.isServerUp())
+		MinecraftPingReply data = new MinecraftPing().getPing(new MinecraftPingOptions().setHostname("").setPort(25565));
+
+		//MineStat ms = new MineStat("216.82.132.117", 25565);
+		//if(ms.isServerUp())
+
+
+		if(data.getDescription() != null)
 		{
 			EmbedBuilder em = new EmbedBuilder().setColor( Constants.embedPurple);
 			em.setDescription("<:MCDirt:665978962240864276> WolfMC Network Status")
 					.setColor(Constants.embedLime)
-					.addField("`Players`", ms.getCurrentPlayers(), false)
-					.addField("Status", Emojis.CHECK + "", false);
+					//.addField("`Players`", ms.getCurrentPlayers(), true)
+					//.addField("Status", Emojis.CHECK + "", true);
+
+					.addField("`Players`", data.getPlayers().getOnline() + "", true)
+					.addField("Status", Emojis.CHECK + "", true);
 
 			event.getChannel().sendMessage(em.build()).queue();
 		}else{
 			EmbedBuilder em = new EmbedBuilder().setColor( Constants.embedPurple);
 			em.setDescription("<:MCDirt:665978962240864276> WolfMC Network Status")
 					.setColor(Constants.embedRed)
-					.addField("`SERVER OFFLINE`", "", false);
+					.addField("`<:MCredstone:665978962211766292> SERVER OFFLINE`", "", false);
 
 			event.getChannel().sendMessage(em.build()).queue();
 		}
