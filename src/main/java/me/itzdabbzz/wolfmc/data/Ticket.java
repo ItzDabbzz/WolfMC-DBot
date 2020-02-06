@@ -3,7 +3,10 @@ package me.itzdabbzz.wolfmc.data;
 import me.itzdabbzz.wolfmc.WolfBot;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.itzdabbzz.wolfmc.util.Utils;
+import me.vem.jdab.sqlite.SqliteDatabase;
+import me.vem.jdab.sqlite.SqliteQuery;
 import me.vem.jdab.utils.ExtFileManager;
+import me.vem.jdab.utils.Logger;
 import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -13,6 +16,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -32,12 +36,14 @@ public class Ticket {
         this.ticketID = ticketID;
         this.ticketUser =  ticketUser;
         this.ticketReason = ticketReason;
+        this.department = department;
         createTicket();
     }
 
     private String ticketID;
     private String ticketUser;
     private String ticketReason;
+    private String department;
     private final Message message;
     private final Member author;
     private final MessageChannel supportChannel;
@@ -47,7 +53,7 @@ public class Ticket {
     private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*" + "\n\n Please @ <@&620316100680351800> , <@&620316100965564417> , or <@&620316101796036628> depending on who you need.\n <@&614473605958598669> will be here to help you shortly.";
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd, yyyy");
-
+    private static SqliteDatabase db;
 
     public String getTicketID() {
         return ticketID;
@@ -95,11 +101,11 @@ public class Ticket {
         if(Constants.ticketTranscriptInChannel)
         {
             guild.getTextChannelById(620316098390392885L).sendFile(f).queue();
-            Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage.build());
+            //Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage.build());
         }
 
         //Utils.sendEmbededPM(author.getUser(), transcriptMessage);
-        Utils.sendFilePM(author.getUser(), transcriptMessage, f);
+       // Utils.sendFilePM(author.getUser(), transcriptMessage, f);
 
 
         /**
@@ -121,6 +127,8 @@ public class Ticket {
         return ticketChannel.getId();
     }
 
+
+
     private void createTicket() {
         String name = "t-" + author.getEffectiveName() + " - " + (int) (Math.random() * 1000);
         guild.createTextChannel(name).setParent(category).queue(success -> {
@@ -128,18 +136,30 @@ public class Ticket {
             sendMessage();
             supportChannel.deleteMessageById(message.getId()).queue();
 
-            String sql = "CREATE TABLE IF NOT EXISTS wb_users("
-                    + "id INTEGER PRIMARY KEY, "
-                    + "name TEXT, "
-                    + "group TEXT, "
-                    + "xp INTEGER, "
-                    + "level INTEGER, "
-                    + "muted TEXT "
-                    + ");";
-
             String id = getTicketID();
             String user = getTicketUser();
             String reason = getTicketReason();
+            Integer level = 1;
+            Integer finished = 1;
+            String department = "Support";
+
+            String sqlQuery = "INSERT INTO wb_tickets (`id`, `user`, `reason`, `level`, `finished`, `department`) VALUES (`value-1`,`value-2`,`value-3`,`value-4`,`value-5`,`value-6`)";
+            SqliteDatabase.setDefaultConnection("wolfbot.db");
+            db = SqliteDatabase.create();
+            try(SqliteQuery command = db.getQuery(sqlQuery)){
+                command.addParameter("value-1", id);
+                command.addParameter("value-2", user);
+                command.addParameter("value-3", reason);
+                command.addParameter("value-4", level);
+                command.addParameter("value-5", finished);
+                command.addParameter("value-6", department);
+                command.execNonQuery();
+            } catch(IOException | SQLException e) {
+                e.printStackTrace();
+                Logger.err("Cannot Insert Ticket " + getTicketID()) ;
+            }
+
+
 
         });
     }

@@ -11,8 +11,12 @@ import me.itzdabbzz.wolfmc.commands.tickets.tblacklist;
 import me.itzdabbzz.wolfmc.commands.tickets.tremove;
 import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.DiscordBot;
-import me.vem.jdab.utils.*;
-import me.vem.jdab.sqlite.*;
+import me.vem.jdab.sqlite.SqliteDatabase;
+import me.vem.jdab.sqlite.SqliteQuery;
+import me.vem.jdab.utils.Console;
+import me.vem.jdab.utils.ExtFileManager;
+import me.vem.jdab.utils.Logger;
+import me.vem.jdab.utils.Version;
 import org.junit.Assert;
 
 import java.io.BufferedReader;
@@ -23,20 +27,24 @@ import java.sql.SQLException;
 
 public class WolfBot {
 
-    public static DiscordBot getClient(){
+    public static DiscordBot getClient() {
         return DiscordBot.getInstance();
     }
+
     public static Utils utils;
-    public static Utils getUtils() { return utils; }
+
+    public static Utils getUtils() {
+        return utils;
+    }
 
     public static void main(String[] args) {
         Logger.setupFileLogging();
-        Version.initialize(0,0,1,9, "WolfMC");
+        Version.initialize(0 , 0 , 1 , 9 , "WolfMC");
         Console.initialize();
-        Logger.infof("Hello World! From %s", Version.getVersion());
+        Logger.infof("Hello World! From %s" , Version.getVersion());
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "config/token.txt";
-        DiscordBot.initialize(fetchToken(tokenFile));
+        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgVNWA.AydqhX-1ZUW35ghToQRmdfjSC1U");
         SQLiteSetup();
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
@@ -79,7 +87,7 @@ public class WolfBot {
             String out = reader.readLine();
             reader.close();
             return out;
-        } catch (IOException e) {
+        } catch(IOException e) {
             return null;
         }
     }
@@ -91,20 +99,36 @@ public class WolfBot {
         db = SqliteDatabase.create();
 
         String sql = "CREATE TABLE IF NOT EXISTS wb_users("
-                + "id INTEGER PRIMARY KEY, "
-                + "name TEXT, "
-                + "group TEXT, "
-                + "xp INTEGER, "
-                + "level INTEGER, "
-                + "muted TEXT "
+                + "`id` INTEGER PRIMARY KEY, "
+                + "`name` TEXT, "
+                + "`group` TEXT, "
+                + "`xp` INTEGER, "
+                + "`level` INTEGER, "
+                + "`muted` TEXT "
                 + ");";
 
-        try(SqliteQuery cmd = db.getQuery(sql)){
+        String sqlTickets = "CREATE TABLE IF NOT EXISTS wb_tickets("
+                + "`id` INTEGER PRIMARY KEY, "
+                + "`user` TEXT, "
+                + "`reason` TEXT, "
+                + "`level` INTEGER, "
+                + "`finished` INTEGER, "
+                + "`department` TEXT"
+                + ");";
+
+        try(SqliteQuery cmd = db.getQuery(sql)) {
             cmd.execNonQuery();
-            Logger.info("SQLite Table Created ");
-        } catch (SQLException | IOException e) {
+            Logger.info("SQLite Users Table Created ");
+        } catch(SQLException | IOException e) {
             e.printStackTrace();
-            Assert.fail("Failed to set up table for testing.");
+            Assert.fail("Failed to set up Users table for testing.");
+        }
+        try(SqliteQuery cmd = db.getQuery(sqlTickets)) {
+            cmd.execNonQuery();
+            Logger.info("SQLite Ticket Table Created ");
+        } catch(SQLException | IOException e) {
+            e.printStackTrace();
+            Assert.fail("Failed to set up Ticket table for testing.");
         }
     }
 
