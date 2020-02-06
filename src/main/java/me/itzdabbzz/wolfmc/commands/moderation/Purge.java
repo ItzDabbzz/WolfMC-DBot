@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 import me.vem.jdab.struct.MessagePurge;
 import me.vem.jdab.utils.Utilities;

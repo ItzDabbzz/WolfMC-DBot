@@ -3,14 +3,12 @@ package me.itzdabbzz.wolfmc.commands.tickets;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
 import me.itzdabbzz.wolfmc.util.Constants;
-import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 

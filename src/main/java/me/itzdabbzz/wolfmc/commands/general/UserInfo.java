@@ -1,8 +1,6 @@
 package me.itzdabbzz.wolfmc.commands.general;
 
 
-import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
-import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.cmd.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,8 +9,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
 
 public class UserInfo extends Command {
 

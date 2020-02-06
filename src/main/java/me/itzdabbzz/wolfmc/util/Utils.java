@@ -259,6 +259,10 @@ public class Utils {
         sendMessage(MessageType.MODERATION, message, channel, sender);
     }
 
+
+
+
+
     /**
     TODO: Setup Embeded SendAndLog Messages
      */

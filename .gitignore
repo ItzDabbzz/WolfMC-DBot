@@ -252,4 +252,9 @@ $RECYCLE.BIN/
 config/*
 logs/*
 
+node_modules/*
+
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows,eclipse,netbeans,intellij
+WolfMCBot.iml
+WolfMCBot (1).iml
+src/main/java/me/itzdabbzz/wolfmc/WolfBot.java

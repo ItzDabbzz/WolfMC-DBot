@@ -1,8 +1,6 @@
 package me.itzdabbzz.wolfmc.commands.moderation;
 
-import me.vem.jdab.cmd.Command;
 import me.vem.jdab.utils.Respond;
-import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;

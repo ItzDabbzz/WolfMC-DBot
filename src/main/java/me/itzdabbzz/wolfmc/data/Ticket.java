@@ -1,5 +1,6 @@
 package me.itzdabbzz.wolfmc.data;
 
+import me.itzdabbzz.wolfmc.WolfBot;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.itzdabbzz.wolfmc.util.Utils;
 import me.vem.jdab.utils.ExtFileManager;
@@ -126,6 +127,20 @@ public class Ticket {
             this.ticketChannel = (TextChannel) success;
             sendMessage();
             supportChannel.deleteMessageById(message.getId()).queue();
+
+            String sql = "CREATE TABLE IF NOT EXISTS wb_users("
+                    + "id INTEGER PRIMARY KEY, "
+                    + "name TEXT, "
+                    + "group TEXT, "
+                    + "xp INTEGER, "
+                    + "level INTEGER, "
+                    + "muted TEXT "
+                    + ");";
+
+            String id = getTicketID();
+            String user = getTicketUser();
+            String reason = getTicketReason();
+
         });
     }
 
@@ -157,7 +172,7 @@ public class Ticket {
 
         try (PrintWriter writer = new PrintWriter(file)){
 
-            writer.printf("%s%n%s%n%s%n", guildName, channelName, date);
+            writer.printf("%s%n%s%n%s%n%s%n", guildName, channelName, date, author.getEffectiveName());
 
 
             channel.getIterableHistory().cache(false).forEach(m -> {
@@ -169,7 +184,7 @@ public class Ticket {
                     writer.printf("%n%s%n", dateFormatter.format(day.getTime()));
                 }
 
-                writer.printf("[%02d:%02d] %s: %s%n" + author.getNickname(), creation.getHour(), creation.getMinute(), m.getAuthor().getName(), m.getContentDisplay());
+                writer.printf("[%02d:%02d] %s: %s%n", creation.getHour(), creation.getMinute(), m.getAuthor().getName(), m.getContentDisplay());
 
                 for(Message.Attachment a : m.getAttachments())
                     writer.printf("[Embeded: %s]%n", a.getUrl());

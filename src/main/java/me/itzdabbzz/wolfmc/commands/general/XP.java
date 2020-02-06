@@ -1,6 +1,6 @@
 package me.itzdabbzz.wolfmc.commands.general;
 
-import me.itzdabbzz.wolfmc.EXPSystem;
+import me.itzdabbzz.wolfmc.data.EXPSystem;
 import me.vem.jdab.cmd.Command;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -28,7 +28,10 @@ public class XP extends Command{
 			return false;
 
 		EXPSystem xp = EXPSystem.getInstance();
-
+		if(xp.canGetXp(event.getMember())) {
+			xp.randXp(event.getMember());
+			xp.setPlayerTime(event.getMember(), 3);
+		}
 		//Respond.async(event.getChannel(), ":ping_pong: Your Ping Is " + DiscordBot.getInstance().getJDA() + ".");
 		event.getChannel().sendMessage("You have " + xp.getPlayerXP(event.getMember()) + " EXP").queue();
 		return true;

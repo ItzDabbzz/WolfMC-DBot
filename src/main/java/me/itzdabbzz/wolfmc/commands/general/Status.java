@@ -1,19 +1,16 @@
 package me.itzdabbzz.wolfmc.commands.general;
 
 import me.itzdabbzz.wolfmc.util.Constants;
-import me.itzdabbzz.wolfmc.util.MineStat;
 import me.itzdabbzz.wolfmc.util.mcping.MinecraftPing;
 import me.itzdabbzz.wolfmc.util.mcping.MinecraftPingOptions;
 import me.itzdabbzz.wolfmc.util.mcping.MinecraftPingReply;
 import me.vem.jdab.cmd.Command;
-import me.vem.jdab.utils.Respond;
-import me.vem.jdab.utils.emoji.Emoji;
 import me.vem.jdab.utils.emoji.Emojis;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.time.temporal.ChronoUnit;
+import java.io.IOException;
 
 public class Status extends Command{
 
@@ -37,7 +34,12 @@ public class Status extends Command{
 		if(!super.run(event, args))
 			return false;
 
-		MinecraftPingReply data = new MinecraftPing().getPing(new MinecraftPingOptions().setHostname("").setPort(25565));
+		MinecraftPingReply data = null;
+		try {
+			data = new MinecraftPing().getPing(new MinecraftPingOptions().setHostname("216.82.132.117").setPort(25565));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 
 		//MineStat ms = new MineStat("216.82.132.117", 25565);
 		//if(ms.isServerUp())

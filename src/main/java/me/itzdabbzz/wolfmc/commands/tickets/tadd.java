@@ -4,21 +4,12 @@ import com.google.gson.Gson;
 import me.itzdabbzz.wolfmc.commands.moderation.Permissions;
 import me.itzdabbzz.wolfmc.commands.moderation.SecureCommand;
 import me.itzdabbzz.wolfmc.util.Constants;
-import me.vem.jdab.cmd.Command;
-import me.vem.jdab.cmd.Configurable;
-import me.vem.jdab.utils.ExtFileManager;
-import me.vem.jdab.utils.Logger;
 import me.vem.jdab.utils.Utilities;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 

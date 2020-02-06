@@ -1,11 +1,9 @@
 package me.itzdabbzz.wolfmc.commands.general;
 
 import me.vem.jdab.cmd.Command;
-import me.vem.jdab.utils.Respond;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 

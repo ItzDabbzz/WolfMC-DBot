@@ -4,12 +4,12 @@ import java.awt.*;
 
 public enum MessageType {
 
-    INFO(Color.CYAN),
-    SUCCESS(Color.GREEN),
-    WARNING(Color.YELLOW),
-    MODERATION(Color.magenta),
+    INFO(Constants.embedCyan),
+    SUCCESS(Constants.embedLime),
+    WARNING(Constants.embedYellow),
+    MODERATION(Constants.embedDPink),
     ERROR(Color.RED),
-    NEUTRAL(Constants.embedCyan);
+    NEUTRAL(Constants.embedTeal);
 
     private final Color color;
 

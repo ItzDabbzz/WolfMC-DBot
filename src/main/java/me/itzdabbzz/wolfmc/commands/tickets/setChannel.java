@@ -1,10 +1,8 @@
 package me.itzdabbzz.wolfmc.commands.tickets;
 
-import com.google.gson.Gson;
 import me.itzdabbzz.wolfmc.data.ChannelTracker;
 import me.itzdabbzz.wolfmc.util.Constants;
 import me.vem.jdab.cmd.Command;
-import me.vem.jdab.utils.ExtFileManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -13,8 +11,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 public class setChannel extends Command {
@@ -49,7 +45,6 @@ public class setChannel extends Command {
 				if(!channels.isEmpty()) {
 					TextChannel support = channels.get(0);
 					ChannelTracker.setChannel(support);
-
 					Message setChannel = new MessageBuilder()
 							.setEmbed(new EmbedBuilder()
 									.setDescription("Set Ticket Open Channel To "+ support)

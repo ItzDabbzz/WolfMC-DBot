@@ -1,5 +1,6 @@
 package me.itzdabbzz.wolfmc.objects;
 
+import com.sun.istack.internal.Nullable;
 import me.itzdabbzz.wolfmc.WolfBot;
 import me.vem.jdab.utils.Logger;
 import net.dv8tion.jda.api.Permission;
@@ -7,7 +8,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
