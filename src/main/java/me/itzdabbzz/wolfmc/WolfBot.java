@@ -98,31 +98,54 @@ public class WolfBot {
         SqliteDatabase.setDefaultConnection("wolfbot.db");
         db = SqliteDatabase.create();
 
-        String sql = "CREATE TABLE IF NOT EXISTS wb_users("
-                + "`id` INTEGER PRIMARY KEY, "
-                + "`name` TEXT, "
-                + "`group` TEXT, "
-                + "`xp` INTEGER, "
-                + "`level` INTEGER, "
-                + "`muted` TEXT "
+        String sqlGuilds = "CREATE TABLE IF NOT EXISTS wb_guilds("
+                + "'id' INTEGER PRIMARY KEY, "
+                + "'name' TEXT, "
+                + "'prefix' TEXT, "
+                + "'welcomeChan' TEXT, "
+                + "'welcomeMSG' TEXT, "
+                + "'welcomeMSGEnabled' TEXT, "
+                + "'ticketChan' TEXT "
+                + "'modlogChan' TEXT, "
+                + "'modRole' TEXT, "
+                + "'staffRole' TEXT "
+                + ");";
+
+        String sqlUsers = "CREATE TABLE IF NOT EXISTS wb_users("
+                + "'id' INTEGER PRIMARY KEY, "
+                + "'name' TEXT, "
+                + "'group' TEXT, "
+                + "'xp' INTEGER, "
+                + "'level' INTEGER, "
+                + "'muted' TEXT "
                 + ");";
 
         String sqlTickets = "CREATE TABLE IF NOT EXISTS wb_tickets("
-                + "`id` INTEGER PRIMARY KEY, "
-                + "`user` TEXT, "
-                + "`reason` TEXT, "
-                + "`level` INTEGER, "
-                + "`finished` INTEGER, "
-                + "`department` TEXT"
+                + "'id' INTEGER PRIMARY KEY, "
+                + "'ticketID' INTEGER, "
+                + "'user' TEXT, "
+                + "'reason' TEXT, "
+                + "'level' INTEGER, "
+                + "'finished' INTEGER, "
+                + "'department' TEXT"
                 + ");";
 
-        try(SqliteQuery cmd = db.getQuery(sql)) {
+        try(SqliteQuery cmd = db.getQuery(sqlGuilds)) {
+            cmd.execNonQuery();
+            Logger.info("SQLite Guilds Table Created ");
+        } catch(SQLException | IOException e) {
+            e.printStackTrace();
+            Assert.fail("Failed to set up Guilds table for testing.");
+        }
+
+        try(SqliteQuery cmd = db.getQuery(sqlUsers)) {
             cmd.execNonQuery();
             Logger.info("SQLite Users Table Created ");
         } catch(SQLException | IOException e) {
             e.printStackTrace();
             Assert.fail("Failed to set up Users table for testing.");
         }
+
         try(SqliteQuery cmd = db.getQuery(sqlTickets)) {
             cmd.execNonQuery();
             Logger.info("SQLite Ticket Table Created ");

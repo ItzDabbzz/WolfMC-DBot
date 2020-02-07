@@ -34,8 +34,8 @@ public class Ticket {
         this.guild = e.getGuild();
         this.message = e.getMessage();
         this.ticketID = ticketID;
-        this.ticketUser =  ticketUser;
-        this.ticketReason = ticketReason;
+        this.ticketUser =  e.getMember().getId();
+        this.ticketReason = e.getMessage().toString();
         this.department = department;
         createTicket();
     }
@@ -143,16 +143,16 @@ public class Ticket {
             Integer finished = 1;
             String department = "Support";
 
-            String sqlQuery = "INSERT INTO wb_tickets (`id`, `user`, `reason`, `level`, `finished`, `department`) VALUES (`value-1`,`value-2`,`value-3`,`value-4`,`value-5`,`value-6`)";
-            SqliteDatabase.setDefaultConnection("wolfbot.db");
+            String sqlQuery = "INSERT INTO wb_tickets (`id`, `ticketID`, `user`, `reason`, `level`, `finished`, `department`) VALUES (value-1, value-2, value-3, value-4, value-5, value-6, value-7)";
             db = SqliteDatabase.create();
             try(SqliteQuery command = db.getQuery(sqlQuery)){
                 command.addParameter("value-1", id);
-                command.addParameter("value-2", user);
-                command.addParameter("value-3", reason);
-                command.addParameter("value-4", level);
-                command.addParameter("value-5", finished);
-                command.addParameter("value-6", department);
+                command.addParameter("value-2", getID());
+                command.addParameter("value-3", user);
+                command.addParameter("value-4", reason);
+                command.addParameter("value-5", level);
+                command.addParameter("value-6", finished);
+                command.addParameter("value-7", department);
                 command.execNonQuery();
             } catch(IOException | SQLException e) {
                 e.printStackTrace();
