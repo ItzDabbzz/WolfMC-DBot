@@ -173,7 +173,7 @@ public class Monitor extends Command implements EventListener, Configurable{
 			return;
 		
 		if(event.getChannel().equals(info.channel))
-			event.getMessage().delete().queue();
+			event.getMessage().delete();
 		else {
 			msgLookup.put(event.getMessageIdLong(), new MessageInfo(event.getAuthor(), event.getMessage().getContentRaw()));
 		}

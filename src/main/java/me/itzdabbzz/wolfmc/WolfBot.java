@@ -27,6 +27,14 @@ import java.sql.SQLException;
 
 public class WolfBot {
 
+    /**
+     *  How do i set it a system of some sort to easily access users and guild settings through sqlite for example
+     *  Integer XP = new User(event.getUser()).getXP();
+     *  would return a users XP
+     *
+     */
+
+
     public static DiscordBot getClient() {
         return DiscordBot.getInstance();
     }
@@ -44,7 +52,7 @@ public class WolfBot {
         Logger.infof("Hello World! From %s" , Version.getVersion());
 
         String tokenFile = args.length > 0 ? fetchToken(args[0]) : "config/token.txt";
-        DiscordBot.initialize("NjA5NTYyNzcxODg5MDYxODk4.XgVNWA.AydqhX-1ZUW35ghToQRmdfjSC1U");
+        DiscordBot.initialize("");
         SQLiteSetup();
 
         //Permissions is critical to the function of several other commands, so it must be initialized first.
@@ -53,6 +61,7 @@ public class WolfBot {
         DiscordBot.getInstance().addEventListener(new MessageListeners());
         DiscordBot.getInstance().addEventListener(Monitor.getInstance());
         DiscordBot.getInstance().addEventListener(new me.itzdabbzz.wolfmc.data.EXPSystem());
+        DiscordBot.getInstance().addEventListener(new GuildListeners());
 
         me.itzdabbzz.wolfmc.data.EXPSystem system = new me.itzdabbzz.wolfmc.data.EXPSystem();
         system.startTimer();

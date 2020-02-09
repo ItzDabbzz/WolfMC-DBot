@@ -1,9 +1,6 @@
 package me.itzdabbzz.wolfmc;
 
-import me.itzdabbzz.wolfmc.data.Ticket;
-import me.itzdabbzz.wolfmc.data.TicketBlacklist;
-import me.itzdabbzz.wolfmc.data.TicketTracker;
-import me.itzdabbzz.wolfmc.data.ChannelTracker;
+import me.itzdabbzz.wolfmc.data.*;
 import me.itzdabbzz.wolfmc.util.Constants;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class Ticket {
 
     public Ticket(MessageReceivedEvent e, Category category){
+        String content = e.getMessage().getContentRaw();
         this.author = e.getMember();
         this.supportChannel = e.getChannel();
         this.category = category;
@@ -35,7 +36,7 @@ public class Ticket {
         this.message = e.getMessage();
         this.ticketID = ticketID;
         this.ticketUser =  e.getMember().getId();
-        this.ticketReason = e.getMessage().toString();
+        this.ticketReason = e.getMessage().getContentStripped();
         this.department = department;
         createTicket();
     }
@@ -50,7 +51,7 @@ public class Ticket {
     private final Category category;
     private final Guild guild;
     private TextChannel ticketChannel;
-    private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*" + "\n\n Please @ <@&620316100680351800> , <@&620316100965564417> , or <@&620316101796036628> depending on who you need.\n <@&614473605958598669> will be here to help you shortly.";
+    private static final String INFO = "\n\n*To close your ticket , react with  " + Constants.CHECK + "*" + "\n\n Please @ <@&620316101796036628> , <@&620316100965564417> , or  depending on who you need.\n <@&614473605958598669> will be here to help you shortly.";
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd, yyyy");
     private static SqliteDatabase db;
@@ -79,7 +80,7 @@ public class Ticket {
         this.ticketReason = ticketReason;
     }
 
-
+    //TODO: How to setup questions after creation of a ticket to setup ticket level and department.
 
     public void closeIfValid() {
 
@@ -101,12 +102,13 @@ public class Ticket {
         if(Constants.ticketTranscriptInChannel)
         {
             guild.getTextChannelById(620316098390392885L).sendFile(f).queue();
-            //Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage.build());
+            Respond.async(guild.getTextChannelById(620316098390392885L), transcriptMessage.build());
         }
 
-        //Utils.sendEmbededPM(author.getUser(), transcriptMessage);
-       // Utils.sendFilePM(author.getUser(), transcriptMessage, f);
+        Utils.sendEmbededPM(author.getUser(), transcriptMessage);
+        Utils.sendFilePM(author.getUser(), transcriptMessage, f);
 
+        //TODO: Set Ticket Finished In SQLite wb_tickets Table
 
         /**
          * Mark Ticket As Closed
@@ -135,35 +137,27 @@ public class Ticket {
             this.ticketChannel = (TextChannel) success;
             sendMessage();
             supportChannel.deleteMessageById(message.getId()).queue();
-
-            String id = getTicketID();
-            String user = getTicketUser();
-            String reason = getTicketReason();
-            Integer level = 1;
-            Integer finished = 1;
-            String department = "Support";
-
-            String sqlQuery = "INSERT INTO wb_tickets (`id`, `ticketID`, `user`, `reason`, `level`, `finished`, `department`) VALUES (value-1, value-2, value-3, value-4, value-5, value-6, value-7)";
-            db = SqliteDatabase.create();
-            try(SqliteQuery command = db.getQuery(sqlQuery)){
-                command.addParameter("value-1", id);
-                command.addParameter("value-2", getID());
-                command.addParameter("value-3", user);
-                command.addParameter("value-4", reason);
-                command.addParameter("value-5", level);
-                command.addParameter("value-6", finished);
-                command.addParameter("value-7", department);
-                command.execNonQuery();
-            } catch(IOException | SQLException e) {
-                e.printStackTrace();
-                Logger.err("Cannot Insert Ticket " + getTicketID()) ;
-            }
-
-
-
         });
     }
 
+
+    /**
+     *         String sqlQuery = "INSERT INTO wb_tickets ('id', 'ticketID', 'user', 'reason', 'level', 'finished', 'department') VALUES (value-1, value-2, value-3, value-4, value-5, value-6, value-7)";
+     *         db = SqliteDatabase.create();
+     *         try(SqliteQuery command = db.getQuery(sqlQuery)){
+     *             command.addParameter("value-1", e.getMember().getId());
+     *             command.addParameter("value-2", getID());
+     *             command.addParameter("value-3", e.getMember().getEffectiveName());
+     *             command.addParameter("value-4", e.getMessage());
+     *             command.addParameter("value-5", 0);
+     *             command.addParameter("value-6", 0);
+     *             command.addParameter("value-7", department);
+     *             command.execNonQuery();
+     *         } catch(IOException | SQLException er) {
+     *             er.printStackTrace();
+     *             Logger.err("Cannot Insert Ticket " + getTicketID()) ;
+     *         }
+     */
 
 
     private void sendMessage() {
