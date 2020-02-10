@@ -15,7 +15,13 @@ public class UserDB {
     private WolfBot bot;
     private static SqliteDatabase db;
 
-    
+    private Long userID;
+    private String userName;
+    private Long groupID;
+    private Integer xp;
+    private Integer level;
+    private boolean muted;
+
     public static void getUser(Member member){
         String sqlQuery = "INSERT INTO wb_users ('id', 'name', 'group', 'xp', 'level', 'muted') VALUES (value-1, value-2, value-3, value-4, value-5, value-6)";
         db = SqliteDatabase.create();
@@ -27,7 +33,7 @@ public class UserDB {
             command.addParameter("value-3", 0);
             command.addParameter("value-4", 0);
             command.addParameter("value-5", 1);
-            command.addParameter("value-6", "muted");
+            command.addParameter("value-6", false);
             command.execNonQuery();
             Logger.info("Inserted User " + member.getEffectiveName());
         } catch(IOException | SQLException e) {

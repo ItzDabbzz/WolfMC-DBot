@@ -111,13 +111,14 @@ public class WolfBot {
                 + "'id' INTEGER PRIMARY KEY, "
                 + "'name' TEXT, "
                 + "'prefix' TEXT, "
-                + "'welcomeChan' TEXT, "
+                + "'welcomeChan' INTEGER, "
                 + "'welcomeMSG' TEXT, "
                 + "'welcomeMSGEnabled' TEXT, "
-                + "'ticketChan' TEXT "
-                + "'modlogChan' TEXT, "
-                + "'modRole' TEXT, "
-                + "'staffRole' TEXT "
+                + "'ticketChan' INTEGER, "
+                + "'modRole' INTEGER, "
+                + "'staffRole' INTEGER "
+                + "'supportRole' INTEGER, "
+                + "'modlogChan' INTEGER "
                 + ");";
 
         String sqlUsers = "CREATE TABLE IF NOT EXISTS wb_users("
@@ -126,7 +127,7 @@ public class WolfBot {
                 + "'group' TEXT, "
                 + "'xp' INTEGER, "
                 + "'level' INTEGER, "
-                + "'muted' TEXT "
+                + "'muted' BOOLEAN "
                 + ");";
 
         String sqlTickets = "CREATE TABLE IF NOT EXISTS wb_tickets("

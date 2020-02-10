@@ -51,7 +51,27 @@ public class GuildListeners extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(GuildJoinEvent e){
+        String sqlQuery = "INSERT INTO wb_guilds ('id', 'name', 'prefix', 'welcomeChan', 'welcomeMSG', 'welcomeMSGEnabled', 'ticketChan', 'modRole', 'staffRole', 'supportRole', 'modlogChan') VALUES (value-1, value-2, value-3, value-4, value-5, value-6, value-7, value-8, value-9, value-10, value-11)";
+        db = SqliteDatabase.create();
 
+        try(SqliteQuery command = db.getQuery(sqlQuery)){
+            command.addParameter("value-1", (int) e.getGuild().getIdLong());
+            command.addParameter("value-2", e.getGuild().getName());
+            command.addParameter("value-3", "!");
+            command.addParameter("value-4", (int) 620316089401999370L);
+            command.addParameter("value-5", "0");
+            command.addParameter("value-6", "false");
+            command.addParameter("value-7", (int) 620316094317592581L);
+            command.addParameter("value-8", (int) 609768996102995988L);
+            command.addParameter("value-9", (int) 620316099765993481L);
+            command.addParameter("value-10", (int) 614473605958598669L);
+            command.addParameter("value-11", (int) 657726698800021535L);
+            command.execNonQuery();
+            Logger.info("Inserted Guild " + e.getGuild().getName());
+        } catch(IOException | SQLException e1) {
+            e1.printStackTrace();
+            Logger.err("Cannot Insert Guild " + e.getGuild().getName()) ;
+        }
     }
 
     @Override
@@ -106,7 +126,7 @@ public class GuildListeners extends ListenerAdapter {
             command.addParameter("value-3", roles.toString());
             command.addParameter("value-4", 0);
             command.addParameter("value-5", 1);
-            command.addParameter("value-6", "0");
+            command.addParameter("value-6", false);
             command.execNonQuery();
             Logger.info("Inserted User " + member.getEffectiveName());
         } catch(IOException | SQLException e) {
